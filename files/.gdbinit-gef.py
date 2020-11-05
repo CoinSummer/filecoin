@@ -226,6 +226,14 @@ else:
         class GefLruCache(object):
             """Local LRU cache for Python2"""
             def __init__(self, input_func, max_size):
+                """
+                Initialize the module.
+
+                Args:
+                    self: (todo): write your description
+                    input_func: (todo): write your description
+                    max_size: (int): write your description
+                """
                 self._input_func        = input_func
                 self._max_size          = max_size
                 self._caches_dict       = {}
@@ -307,6 +315,11 @@ def bufferize(f):
 
     @functools.wraps(f)
     def wrapper(*args, **kwargs):
+        """
+        Wrapper for _wrapper_stream.
+
+        Args:
+        """
         global __gef_int_stream_buffer__
 
         if __gef_int_stream_buffer__:
@@ -342,24 +355,84 @@ class Color:
     }
 
     @staticmethod
+    """
+    Redify a message. colorify.
+
+    Args:
+        msg: (str): write your description
+    """
     def redify(msg):       return Color.colorify(msg, attrs="red")
     @staticmethod
+    """
+    Prints a message with the foreground color.
+
+    Args:
+        msg: (str): write your description
+    """
     def greenify(msg):     return Color.colorify(msg, attrs="green")
     @staticmethod
+    """
+    Converts a message with colorify.
+
+    Args:
+        msg: (str): write your description
+    """
     def blueify(msg):      return Color.colorify(msg, attrs="blue")
     @staticmethod
+    """
+    Prints a message with colorify.
+
+    Args:
+        msg: (str): write your description
+    """
     def yellowify(msg):    return Color.colorify(msg, attrs="yellow")
     @staticmethod
+    """
+    Converts a grays message.
+
+    Args:
+        msg: (str): write your description
+    """
     def grayify(msg):      return Color.colorify(msg, attrs="gray")
     @staticmethod
+    """
+    Convert a message to ansi color.
+
+    Args:
+        msg: (str): write your description
+    """
     def pinkify(msg):      return Color.colorify(msg, attrs="pink")
     @staticmethod
+    """
+    Convert a message to ansi color.
+
+    Args:
+        msg: (str): write your description
+    """
     def boldify(msg):      return Color.colorify(msg, attrs="bold")
     @staticmethod
+    """
+    Prints a message with color.
+
+    Args:
+        msg: (str): write your description
+    """
     def underlinify(msg):  return Color.colorify(msg, attrs="underline")
     @staticmethod
+    """
+    Highlight the given color.
+
+    Args:
+        msg: (str): write your description
+    """
     def highlightify(msg): return Color.colorify(msg, attrs="highlight")
     @staticmethod
+    """
+    Convenify message.
+
+    Args:
+        msg: (str): write your description
+    """
     def blinkify(msg):     return Color.colorify(msg, attrs="blink")
 
     @staticmethod
@@ -380,6 +453,12 @@ class Color:
 class Address:
     """GEF representation of memory addresses."""
     def __init__(self, *args, **kwargs):
+        """
+        Initialize an instance.
+
+        Args:
+            self: (todo): write your description
+        """
         self.value = kwargs.get("value", 0)
         self.section = kwargs.get("section", None)
         self.info = kwargs.get("info", None)
@@ -387,6 +466,12 @@ class Address:
         return
 
     def __str__(self):
+        """
+        The color string.
+
+        Args:
+            self: (todo): write your description
+        """
         value = format_address(self.value)
         code_color = get_gef_setting("theme.address_code")
         stack_color = get_gef_setting("theme.address_stack")
@@ -400,16 +485,40 @@ class Address:
         return value
 
     def is_in_text_segment(self):
+        """
+        Return true if the file is in the segment.
+
+        Args:
+            self: (todo): write your description
+        """
         return (hasattr(self.info, "name") and ".text" in self.info.name) or \
             (hasattr(self.section, "path") and get_filepath() == self.section.path and self.section.is_executable())
 
     def is_in_stack_segment(self):
+        """
+        Return true if this segment is in the segment segment.
+
+        Args:
+            self: (todo): write your description
+        """
         return hasattr(self.section, "path") and "[stack]" == self.section.path
 
     def is_in_heap_segment(self):
+        """
+        Return true if this segment is in this segment.
+
+        Args:
+            self: (todo): write your description
+        """
         return hasattr(self.section, "path") and "[heap]" == self.section.path
 
     def dereference(self):
+        """
+        Dereference address of this address.
+
+        Args:
+            self: (todo): write your description
+        """
         addr = align_address(long(self.value))
         derefed = dereference(addr)
         return None if derefed is None else long(derefed)
@@ -424,25 +533,72 @@ class Permission:
     ALL       = READ | WRITE | EXECUTE
 
     def __init__(self, **kwargs):
+        """
+        Initialize self. __init__.
+
+        Args:
+            self: (todo): write your description
+        """
         self.value = kwargs.get("value", 0)
         return
 
     def __or__(self, value):
+        """
+        Returns the value or set or none or not the given value.
+
+        Args:
+            self: (todo): write your description
+            value: (todo): write your description
+        """
         return self.value | value
 
     def __and__(self, value):
+        """
+        Returns the given value to the given value.
+
+        Args:
+            self: (todo): write your description
+            value: (todo): write your description
+        """
         return self.value & value
 
     def __xor__(self, value):
+        """
+        Returns the xor value for the given value.
+
+        Args:
+            self: (todo): write your description
+            value: (todo): write your description
+        """
         return self.value ^ value
 
     def __eq__(self, value):
+        """
+        Returns true if the given value is equal to the given value.
+
+        Args:
+            self: (todo): write your description
+            value: (todo): write your description
+        """
         return self.value == value
 
     def __ne__(self, value):
+        """
+        Returns the value of the given value.
+
+        Args:
+            self: (todo): write your description
+            value: (todo): write your description
+        """
         return self.value != value
 
     def __str__(self):
+        """
+        Returns a string representation of the permission.
+
+        Args:
+            self: (todo): write your description
+        """
         perm_str = ""
         perm_str += "r" if self & Permission.READ else "-"
         perm_str += "w" if self & Permission.WRITE else "-"
@@ -451,6 +607,11 @@ class Permission:
 
     @staticmethod
     def from_info_sections(*args):
+        """
+        Creates a permission object from args
+
+        Args:
+        """
         perm = Permission()
         for arg in args:
             if "READONLY" in arg:
@@ -463,6 +624,12 @@ class Permission:
 
     @staticmethod
     def from_process_maps(perm_str):
+        """
+        Return a perm_str from a perm_str.
+
+        Args:
+            perm_str: (str): write your description
+        """
         perm = Permission()
         if perm_str[0] == "r":
             perm.value += Permission.READ
@@ -483,28 +650,64 @@ class Section:
     path            = None
 
     def __init__(self, *args, **kwargs):
+        """
+        Creates a set of this class.
+
+        Args:
+            self: (todo): write your description
+        """
         for attr in ["page_start", "page_end", "offset", "permission", "inode", "path", ]:
             value = kwargs.get(attr)
             setattr(self, attr, value)
         return
 
     def is_readable(self):
+        """
+        Returns true if the field is readable.
+
+        Args:
+            self: (todo): write your description
+        """
         return self.permission.value and self.permission.value&Permission.READ
 
     def is_writable(self):
+        """
+        Returns true if the user has writable.
+
+        Args:
+            self: (todo): write your description
+        """
         return self.permission.value and self.permission.value&Permission.WRITE
 
     def is_executable(self):
+        """
+        Returns true if the given permission is an executable.
+
+        Args:
+            self: (todo): write your description
+        """
         return self.permission.value and self.permission.value&Permission.EXECUTE
 
     @property
     def size(self):
+        """
+        Return the number of pages.
+
+        Args:
+            self: (todo): write your description
+        """
         if self.page_end is None or self.page_start is None:
             return -1
         return self.page_end - self.page_start
 
     @property
     def realpath(self):
+        """
+        Return the real path of the realpath.
+
+        Args:
+            self: (todo): write your description
+        """
         # when in a `gef-remote` session, realpath returns the path to the binary on the local disk, not remote
         return self.path if __gef_remote__ is None else "/tmp/gef/{:d}/{:s}".format(__gef_remote__, self.path)
 
@@ -608,16 +811,38 @@ class Elf:
 class Instruction:
     """GEF representation of a CPU instruction."""
     def __init__(self, address, location, mnemo, operands):
+        """
+        Initialize interface.
+
+        Args:
+            self: (todo): write your description
+            address: (str): write your description
+            location: (str): write your description
+            mnemo: (todo): write your description
+            operands: (todo): write your description
+        """
         self.address, self.location, self.mnemonic, self.operands = address, location, mnemo, operands
         return
 
     def __str__(self):
+        """
+        Return a string representation of this instruction.
+
+        Args:
+            self: (todo): write your description
+        """
         return "{:#10x} {:16} {:6} {:s}".format(self.address,
                                                 self.location,
                                                 self.mnemonic,
                                                 ", ".join(self.operands))
 
     def is_valid(self):
+        """
+        Determine if a valid valid valid.
+
+        Args:
+            self: (todo): write your description
+        """
         return "(bad)" not in self.mnemonic
 
 
@@ -625,6 +850,15 @@ class GlibcArena:
     """Glibc arena class
     Ref: https://github.com/sploitfun/lsploits/blob/master/glibc/malloc/malloc.c#L1671 """
     def __init__(self, addr, name=__gef_default_main_arena__):
+        """
+        Initialize an address.
+
+        Args:
+            self: (todo): write your description
+            addr: (todo): write your description
+            name: (str): write your description
+            __gef_default_main_arena__: (todo): write your description
+        """
         arena = gdb.parse_and_eval(addr)
         malloc_state_t = cached_lookup_type("struct malloc_state")
         self.__name = name
@@ -633,27 +867,67 @@ class GlibcArena:
         return
 
     def __getitem__(self, item):
+        """
+        Return item from the dict
+
+        Args:
+            self: (todo): write your description
+            item: (str): write your description
+        """
         return self.__arena[item]
 
     def __getattr__(self, item):
+        """
+        Returns the value of an item
+
+        Args:
+            self: (todo): write your description
+            item: (str): write your description
+        """
         return self.__arena[item]
 
     def __int__(self):
+        """
+        Returns the int int.
+
+        Args:
+            self: (todo): write your description
+        """
         return self.__addr
 
     def fastbin(self, i):
+        """
+        Get fastbin data.
+
+        Args:
+            self: (todo): write your description
+            i: (todo): write your description
+        """
         addr = dereference_as_long(self.fastbinsY[i])
         if addr == 0:
             return None
         return GlibcChunk(addr + 2 * current_arch.ptrsize)
 
     def bin(self, i):
+        """
+        Return the bin as a tuple.
+
+        Args:
+            self: (todo): write your description
+            i: (todo): write your description
+        """
         idx = i * 2
         fd = dereference_as_long(self.bins[idx])
         bw = dereference_as_long(self.bins[idx + 1])
         return fd, bw
 
     def get_next(self):
+        """
+        Returns the next glib.
+
+        Args:
+            self: (todo): write your description
+        """
         addr_next = dereference_as_long(self.next)
         arena_main = GlibcArena(self.__name)
         if addr_next == arena_main.__addr:
@@ -661,6 +935,12 @@ class GlibcArena:
         return GlibcArena("*{:#x} ".format(addr_next))
 
     def __str__(self):
+        """
+        Return a string representation of the machine.
+
+        Args:
+            self: (todo): write your description
+        """
         top             = dereference_as_long(self.top)
         last_remainder  = dereference_as_long(self.last_remainder)
         n               = dereference_as_long(self.next)
@@ -675,6 +955,14 @@ class GlibcChunk:
     Ref:  https://sploitfun.wordpress.com/2015/02/10/understanding-glibc-malloc/"""
 
     def __init__(self, addr, from_base=False):
+        """
+        Initialize a memory.
+
+        Args:
+            self: (todo): write your description
+            addr: (todo): write your description
+            from_base: (str): write your description
+        """
         self.ptrsize = current_arch.ptrsize
         if from_base:
             self.chunk_base_address = addr
@@ -688,13 +976,31 @@ class GlibcChunk:
         return
 
     def get_chunk_size(self):
+        """
+        Returns the size of the chunk.
+
+        Args:
+            self: (todo): write your description
+        """
         return read_int_from_memory(self.size_addr) & (~0x03)
 
     @property
     def size(self):
+        """
+        Returns the size of the chunk.
+
+        Args:
+            self: (todo): write your description
+        """
         return self.get_chunk_size()
 
     def get_usable_size(self):
+        """
+        Returns the size of the chunk
+
+        Args:
+            self: (todo): write your description
+        """
         # https://github.com/sploitfun/lsploits/blob/master/glibc/malloc/malloc.c#L4537
         cursz = self.get_chunk_size()
         if cursz == 0: return cursz
@@ -703,30 +1009,72 @@ class GlibcChunk:
 
     @property
     def usable_size(self):
+        """
+        The number of the number of bytes
+
+        Args:
+            self: (todo): write your description
+        """
         return self.get_usable_size()
 
     def get_prev_chunk_size(self):
+        """
+        Returns the size of the chunk.
+
+        Args:
+            self: (todo): write your description
+        """
         return read_int_from_memory(self.prev_size_addr)
 
     def get_next_chunk(self):
+        """
+        Returns the next chunk in the chunk.
+
+        Args:
+            self: (todo): write your description
+        """
         addr = self.address + self.get_chunk_size()
         return GlibcChunk(addr)
 
     # if free-ed functions
     def get_fwd_ptr(self):
+        """
+        Reads the memory pointer pointer.
+
+        Args:
+            self: (todo): write your description
+        """
         return read_int_from_memory(self.address)
 
     @property
     def fwd(self):
+        """
+        : return : attr : class : class : ~fwd. ct.
+
+        Args:
+            self: (todo): write your description
+        """
         return self.get_fwd_ptr()
 
     fd = fwd # for compat
 
     def get_bkw_ptr(self):
+        """
+        Returns the bkw address of the memory.
+
+        Args:
+            self: (todo): write your description
+        """
         return read_int_from_memory(self.address + self.ptrsize)
 
     @property
     def bck(self):
+        """
+        Return the bck of the bck.
+
+        Args:
+            self: (todo): write your description
+        """
         return self.get_bkw_ptr()
 
     bk = bck # for compat
@@ -758,6 +1106,12 @@ class GlibcChunk:
         return True if next_chunk.has_p_bit() else False
 
     def str_chunk_size_flag(self):
+        """
+        Returns a chunk chunk
+
+        Args:
+            self: (todo): write your description
+        """
         msg = []
         msg.append("PREV_INUSE flag: {}".format(Color.greenify("On") if self.has_p_bit() else Color.redify("Off")))
         msg.append("IS_MMAPPED flag: {}".format(Color.greenify("On") if self.has_m_bit() else Color.redify("Off")))
@@ -765,6 +1119,12 @@ class GlibcChunk:
         return "\n".join(msg)
 
     def _str_sizes(self):
+        """
+        Return the sizes as string.
+
+        Args:
+            self: (todo): write your description
+        """
         msg = []
         failed = False
 
@@ -787,6 +1147,12 @@ class GlibcChunk:
         return "\n".join(msg)
 
     def _str_pointers(self):
+        """
+        Return a string representation of the writer.
+
+        Args:
+            self: (todo): write your description
+        """
         fwd = self.address
         bkw = self.address + self.ptrsize
 
@@ -804,12 +1170,30 @@ class GlibcChunk:
         return "\n".join(msg)
 
     def str_as_alloced(self):
+        """
+        Returns the size string representation of the field.
+
+        Args:
+            self: (todo): write your description
+        """
         return self._str_sizes()
 
     def str_as_freed(self):
+        """
+        Return a string representation as a string.
+
+        Args:
+            self: (todo): write your description
+        """
         return "{}\n\n{}".format(self._str_sizes(), self._str_pointers())
 
     def flags_as_string(self):
+        """
+        Returns flags as string.
+
+        Args:
+            self: (todo): write your description
+        """
         flags = []
         if self.has_p_bit():
             flags.append(Color.colorify("PREV_INUSE", attrs="red bold"))
@@ -820,11 +1204,23 @@ class GlibcChunk:
         return "|".join(flags)
 
     def __str__(self):
+        """
+        Return a string with the flags
+
+        Args:
+            self: (todo): write your description
+        """
         msg = "{:s}(addr={:#x}, size={:#x}, flags={:s})".format(Color.colorify("Chunk", attrs="yellow bold underline"),
                                                                 long(self.address),self.get_chunk_size(), self.flags_as_string())
         return msg
 
     def pprint(self):
+        """
+        Print a message as a gdb.
+
+        Args:
+            self: (todo): write your description
+        """
         msg = []
         msg.append(str(self))
         if self.is_used():
@@ -839,6 +1235,11 @@ class GlibcChunk:
 
 @lru_cache()
 def get_main_arena():
+    """
+    Return the main main main main main main main main main main function.
+
+    Args:
+    """
     try:
         return GlibcArena(__gef_default_main_arena__)
     except Exception as e:
@@ -871,9 +1272,37 @@ def _xlog(text, stream, cr=True):
     return 0
 
 
+"""
+Print an error message.
+
+Args:
+    msg: (str): write your description
+    cr: (todo): write your description
+"""
 def err(msg, cr=True):   return _xlog("{} {}".format(Color.colorify("[!]", attrs="bold red"), msg), gdb.STDERR, cr)
+"""
+Print a warning.
+
+Args:
+    msg: (str): write your description
+    cr: (todo): write your description
+"""
 def warn(msg, cr=True):  return _xlog("{} {}".format(Color.colorify("[*]", attrs="bold yellow"), msg), gdb.STDLOG, cr)
+"""
+Display a ok ok message.
+
+Args:
+    msg: (str): write your description
+    cr: (int): write your description
+"""
 def ok(msg, cr=True):    return _xlog("{} {}".format(Color.colorify("[+]", attrs="bold green"), msg), gdb.STDLOG, cr)
+"""
+Display a message
+
+Args:
+    msg: (str): write your description
+    cr: (int): write your description
+"""
 def info(msg, cr=True):  return _xlog("{} {}".format(Color.colorify("[+]", attrs="bold blue"), msg), gdb.STDLOG, cr)
 
 
@@ -891,6 +1320,13 @@ def show_last_exception():
     """Display the last Python exception."""
 
     def _show_code_line(fname, idx):
+        """
+        Show the line of a file
+
+        Args:
+            fname: (str): write your description
+            idx: (todo): write your description
+        """
         fname = os.path.expanduser( os.path.expandvars(fname) )
         __data = open(fname, "r").read().splitlines()
         return __data[idx-1] if idx < len(__data) else ""
@@ -941,6 +1377,12 @@ def gef_pybytes(x):
 def which(program):
     """Locate a command on the filesystem."""
     def is_exe(fpath):
+        """
+        Returns true if the given executable is an executable.
+
+        Args:
+            fpath: (str): write your description
+        """
         return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
 
     fpath = os.path.split(program)[0]
@@ -994,7 +1436,17 @@ def is_debug():
     """Check if debug mode is enabled."""
     return get_gef_setting("gef.debug") == True
 
+"""
+Disable the context to enable a new context.
+
+Args:
+"""
 def disable_context(): set_gef_setting("context.enable", False)
+"""
+Enables a geojson context.
+
+Args:
+"""
 def enable_context(): set_gef_setting("context.enable", True)
 
 def enable_redirect_output(to_file="/dev/null"):
@@ -1200,6 +1652,12 @@ def capstone_disassemble(location, nb_insn, **kwargs):
     Return an iterator of Instruction objects."""
 
     def cs_insn_to_gef_insn(cs_insn):
+        """
+        Convert an instruction instruction to an instruction instruction.
+
+        Args:
+            cs_insn: (todo): write your description
+        """
         sym_info = gdb_get_location_from_symbol(cs_insn.address)
         loc = "<{}+{}>".format(*sym_info) if sym_info else ""
         ops = [] + cs_insn.op_str.split(', ')
@@ -1267,6 +1725,14 @@ def checksec(filename):
         return
 
     def __check_security_property(opt, filename, pattern):
+        """
+        Check whether the security property.
+
+        Args:
+            opt: (str): write your description
+            filename: (str): write your description
+            pattern: (str): write your description
+        """
         cmd   = [readelf,]
         cmd  += opt.split()
         cmd  += [filename,]
@@ -1321,7 +1787,17 @@ def get_endian():
     raise EnvironmentError("Invalid endianess")
 
 
+"""
+Return true if the big endian is big endian.
+
+Args:
+"""
 def is_big_endian():     return get_endian() == Elf.BIG_ENDIAN
+"""
+Return whether the endian endian is endian.
+
+Args:
+"""
 def is_little_endian():  return not is_big_endian()
 
 
@@ -1339,50 +1815,165 @@ class Architecture(object):
     __metaclass__ = abc.ABCMeta
 
     @abc.abstractproperty
+    """
+    Returns a list of the registers in the list.
+
+    Args:
+        self: (todo): write your description
+    """
     def all_registers(self):                       pass
     @abc.abstractproperty
+    """
+    The length of the instruction.
+
+    Args:
+        self: (todo): write your description
+    """
     def instruction_length(self):                  pass
     @abc.abstractproperty
+    """
+    Nopnopn. 1 )
+
+    Args:
+        self: (todo): write your description
+    """
     def nop_insn(self):                            pass
     @abc.abstractproperty
+    """
+    Decorator that will be used to register the register.
+
+    Args:
+        self: (todo): write your description
+    """
     def return_register(self):                     pass
     @abc.abstractproperty
+    """
+    Registers a flag.
+
+    Args:
+        self: (todo): write your description
+    """
     def flag_register(self):                       pass
     @abc.abstractproperty
+    """
+    : return : none
+
+    Args:
+        self: (todo): write your description
+    """
     def flags_table(self):                         pass
     @abc.abstractproperty
+    """
+    Returns the parameters of the function.
+
+    Args:
+        self: (todo): write your description
+    """
     def function_parameters(self):                 pass
     @abc.abstractmethod
+    """
+    Å°ĩå°ĩè°ĥæł¥è¯¢
+
+    Args:
+        self: (todo): write your description
+        val: (todo): write your description
+    """
     def flag_register_to_human(self, val=None):    pass
     @abc.abstractmethod
+    """
+    Returns true if call is callable.
+
+    Args:
+        self: (todo): write your description
+        insn: (todo): write your description
+    """
     def is_call(self, insn):                       pass
     @abc.abstractmethod
+    """
+    Return true if_return.
+
+    Args:
+        self: (todo): write your description
+        insn: (todo): write your description
+    """
     def is_ret(self, insn):                        pass
     @abc.abstractmethod
+    """
+    Returns true if_conditional_branch function.
+
+    Args:
+        self: (todo): write your description
+        insn: (todo): write your description
+    """
     def is_conditional_branch(self, insn):         pass
     @abc.abstractmethod
+    """
+    Return true if_branch ( self.
+
+    Args:
+        self: (todo): write your description
+        insn: (todo): write your description
+    """
     def is_branch_taken(self, insn):               pass
     @abc.abstractmethod
+    """
+    Sets the position to the position.
+
+    Args:
+        self: (todo): write your description
+        insn: (str): write your description
+        frame: (todo): write your description
+    """
     def get_ra(self, insn, frame):                 pass
 
     @property
     def pc(self):
+        """
+        Return a : class
+
+        Args:
+            self: (todo): write your description
+        """
         return get_register("$pc")
 
     @property
     def sp(self):
+        """
+        Return the sparsity
+
+        Args:
+            self: (todo): write your description
+        """
         return get_register("$sp")
 
     @property
     def fp(self):
+        """
+        Returns the fp as a string.
+
+        Args:
+            self: (todo): write your description
+        """
         return get_register("$fp")
 
     @property
     def ptrsize(self):
+        """
+        Return the memory size.
+
+        Args:
+            self: (todo): write your description
+        """
         return get_memory_alignment()
 
     @property
     def all_registers_stripped(self):
+        """
+        Returns a list of all registers in this instruction.
+
+        Args:
+            self: (todo): write your description
+        """
         return [x.strip() for x in self.all_registers]
 
 
@@ -1414,15 +2005,35 @@ class ARM(Architecture):
 
     @property
     def instruction_length(self):
+        """
+        The length of the branch in bytes.
+
+        Args:
+            self: (todo): write your description
+        """
         # Thumb instructions have variable-length (2 or 4-byte)
         return None if is_arm_thumb() else 4
 
     def is_call(self, insn):
+        """
+        Returns true if the instruction is an instruction.
+
+        Args:
+            self: (todo): write your description
+            insn: (todo): write your description
+        """
         mnemo = insn.mnemonic
         call_mnemos = {"bl", "blx"}
         return mnemo in call_mnemos
 
     def is_ret(self, insn):
+        """
+        Returns true if the instruction is retried false otherwise.
+
+        Args:
+            self: (todo): write your description
+            insn: (todo): write your description
+        """
         pop_mnemos = {"pop"}
         branch_mnemos = {"bl", "bx"}
         write_mnemos = {"ldr", "add"}
@@ -1435,6 +2046,13 @@ class ARM(Architecture):
         return
 
     def flag_register_to_human(self, val=None):
+        """
+        Convert val to human readable format.
+
+        Args:
+            self: (todo): write your description
+            val: (todo): write your description
+        """
         # http://www.botskool.com/user-pages/tutorials/electronics/arm-7-tutorial-part-1
         if val is None:
             reg = self.flag_register
@@ -1442,11 +2060,25 @@ class ARM(Architecture):
         return flags_to_human(val, self.flags_table)
 
     def is_conditional_branch(self, insn):
+        """
+        Return true if the branch branch branch.
+
+        Args:
+            self: (todo): write your description
+            insn: (todo): write your description
+        """
         branch_mnemos = {"beq", "bne", "bleq", "blt", "bgt", "bgez", "bvs", "bvc",
                          "jeq", "jne", "jleq", "jlt", "jgt", "jgez", "jvs", "jvc"}
         return insn.mnemonic in branch_mnemos
 
     def is_branch_taken(self, insn):
+        """
+        Check that the branch is_table.
+
+        Args:
+            self: (todo): write your description
+            insn: (todo): write your description
+        """
         mnemo = insn.mnemonic
         # ref: http://www.davespace.co.uk/arm/introduction-to-arm/conditional.html
         flags = dict((self.flags_table[k], k) for k in self.flags_table)
@@ -1464,6 +2096,14 @@ class ARM(Architecture):
         return taken, reason
 
     def get_ra(self, insn, frame):
+        """
+        Retrieve the location of the stack.
+
+        Args:
+            self: (todo): write your description
+            insn: (str): write your description
+            frame: (todo): write your description
+        """
         ra = None
         if self.is_ret(insn):
             # If it's a pop, we have to peek into the stack, otherwise use lr
@@ -1480,6 +2120,15 @@ class ARM(Architecture):
 
     @classmethod
     def mprotect_asm(cls, addr, size, perm):
+        """
+        Generate a mprotect instruction.
+
+        Args:
+            cls: (todo): write your description
+            addr: (array): write your description
+            size: (int): write your description
+            perm: (array): write your description
+        """
         _NR_mprotect = 125
         insns = [
             "push {r0-r2, r7}",
@@ -1517,11 +2166,25 @@ class AARCH64(ARM):
     syscall_instructions = ["svc $x0"]
 
     def is_call(self, insn):
+        """
+        Returns true if the instruction is an instruction.
+
+        Args:
+            self: (todo): write your description
+            insn: (todo): write your description
+        """
         mnemo = insn.mnemonic
         call_mnemos = {"bl", "blr"}
         return mnemo in call_mnemos
 
     def flag_register_to_human(self, val=None):
+        """
+        Convert val to human readable format.
+
+        Args:
+            self: (todo): write your description
+            val: (todo): write your description
+        """
         # http://events.linuxfoundation.org/sites/events/files/slides/KoreaLinuxForum-2014.pdf
         reg = self.flag_register
         if not val:
@@ -1530,9 +2193,25 @@ class AARCH64(ARM):
 
     @classmethod
     def mprotect_asm(cls, addr, size, perm):
+        """
+        Sets an address of a target address.
+
+        Args:
+            cls: (todo): write your description
+            addr: (array): write your description
+            size: (int): write your description
+            perm: (array): write your description
+        """
         raise OSError("Architecture {:s} not supported yet".format(cls.arch))
 
     def is_conditional_branch(self, insn):
+        """
+        Determine whether the branch branch branch.
+
+        Args:
+            self: (todo): write your description
+            insn: (todo): write your description
+        """
         # https://www.element14.com/community/servlet/JiveServlet/previewBody/41836-102-1-229511/ARM.Reference_Manual.pdf
         # sect. 5.1.1
         mnemo = insn.mnemonic
@@ -1540,6 +2219,13 @@ class AARCH64(ARM):
         return mnemo.startswith("b.") or mnemo in branch_mnemos
 
     def is_branch_taken(self, insn):
+        """
+        Returns true if instruction a given instruction.
+
+        Args:
+            self: (todo): write your description
+            insn: (todo): write your description
+        """
         mnemo, operands = insn.mnemonic, insn.operands
         flags = dict((self.flags_table[k], k) for k in self.flags_table)
         val = get_register(self.flag_register)
@@ -1610,20 +2296,48 @@ class X86(Architecture):
     syscall_instructions = ["sysenter", "int 0x80"]
 
     def flag_register_to_human(self, val=None):
+        """
+        Convert val to human readable format.
+
+        Args:
+            self: (todo): write your description
+            val: (todo): write your description
+        """
         reg = self.flag_register
         if not val:
             val = get_register(reg)
         return flags_to_human(val, self.flags_table)
 
     def is_call(self, insn):
+        """
+        Returns true if the instruction is an instruction.
+
+        Args:
+            self: (todo): write your description
+            insn: (todo): write your description
+        """
         mnemo = insn.mnemonic
         call_mnemos = {"call", "callq"}
         return mnemo in call_mnemos
 
     def is_ret(self, insn):
+        """
+        Return true if the instruction is retried false otherwise.
+
+        Args:
+            self: (todo): write your description
+            insn: (todo): write your description
+        """
         return insn.mnemonic == "ret"
 
     def is_conditional_branch(self, insn):
+        """
+        Returns true if branch is a branch branch.
+
+        Args:
+            self: (todo): write your description
+            insn: (todo): write your description
+        """
         mnemo = insn.mnemonic
         branch_mnemos = {
             "ja", "jnbe", "jae", "jnb", "jnc", "jb", "jc", "jnae", "jbe", "jna",
@@ -1634,6 +2348,13 @@ class X86(Architecture):
         return mnemo in branch_mnemos
 
     def is_branch_taken(self, insn):
+        """
+        Checks if the branch is a branch.
+
+        Args:
+            self: (todo): write your description
+            insn: (todo): write your description
+        """
         mnemo = insn.mnemonic
         # all kudos to fG! (https://github.com/gdbinit/Gdbinit/blob/master/gdbinit#L1654)
         flags = dict((self.flags_table[k], k) for k in self.flags_table)
@@ -1679,6 +2400,14 @@ class X86(Architecture):
         return taken, reason
 
     def get_ra(self, insn, frame):
+        """
+        Return the current position of the frame
+
+        Args:
+            self: (todo): write your description
+            insn: (str): write your description
+            frame: (todo): write your description
+        """
         ra = None
         if self.is_ret(insn):
             ra = to_unsigned_long(dereference(current_arch.sp))
@@ -1689,6 +2418,15 @@ class X86(Architecture):
 
     @classmethod
     def mprotect_asm(cls, addr, size, perm):
+        """
+        Generate a mprotect string.
+
+        Args:
+            cls: (todo): write your description
+            addr: (array): write your description
+            size: (int): write your description
+            perm: (array): write your description
+        """
         _NR_mprotect = 125
         insns = [
             "pushad",
@@ -1717,6 +2455,15 @@ class X86_64(X86):
 
     @classmethod
     def mprotect_asm(cls, addr, size, perm):
+        """
+        Generate a mprotect string.
+
+        Args:
+            cls: (todo): write your description
+            addr: (array): write your description
+            size: (int): write your description
+            perm: (array): write your description
+        """
         _NR_mprotect = 10
         insns = ["push rax", "push rdi", "push rsi", "push rdx",
                  "mov rax, {:d}".format(_NR_mprotect),
@@ -1759,6 +2506,13 @@ class PowerPC(Architecture):
     syscall_instructions = ["sc"]
 
     def flag_register_to_human(self, val=None):
+        """
+        Convert val to human readable format.
+
+        Args:
+            self: (todo): write your description
+            val: (todo): write your description
+        """
         # http://www.cebix.net/downloads/bebox/pem32b.pdf (% 2.1.3)
         if not val:
             reg = self.flag_register
@@ -1766,17 +2520,45 @@ class PowerPC(Architecture):
         return flags_to_human(val, self.flags_table)
 
     def is_call(self, insn):
+        """
+        Returns true if the call is callable.
+
+        Args:
+            self: (todo): write your description
+            insn: (todo): write your description
+        """
         return False
 
     def is_ret(self, insn):
+        """
+        Return true if the instruction is retried false otherwise.
+
+        Args:
+            self: (todo): write your description
+            insn: (todo): write your description
+        """
         return insn.mnemonic == "blr"
 
     def is_conditional_branch(self, insn):
+        """
+        Returns true if the branch is a branch branch.
+
+        Args:
+            self: (todo): write your description
+            insn: (todo): write your description
+        """
         mnemo = insn.mnemonic
         branch_mnemos = {"beq", "bne", "ble", "blt", "bgt", "bge"}
         return mnemo in branch_mnemos
 
     def is_branch_taken(self, insn):
+        """
+        Check if the branch is_branch.
+
+        Args:
+            self: (todo): write your description
+            insn: (todo): write your description
+        """
         mnemo = insn.mnemonic
         flags = dict((self.flags_table[k], k) for k in self.flags_table)
         val = get_register(self.flag_register)
@@ -1790,6 +2572,14 @@ class PowerPC(Architecture):
         return taken, reason
 
     def get_ra(self, insn, frame):
+        """
+        Return the frame at the given position.
+
+        Args:
+            self: (todo): write your description
+            insn: (str): write your description
+            frame: (todo): write your description
+        """
         ra = None
         if self.is_ret(insn):
             ra = get_register("$lr")
@@ -1852,6 +2642,13 @@ class SPARC(Architecture):
     syscall_instructions = ["t 0x10"]
 
     def flag_register_to_human(self, val=None):
+        """
+        Convert val to human readable format.
+
+        Args:
+            self: (todo): write your description
+            val: (todo): write your description
+        """
         # http://www.gaisler.com/doc/sparcv8.pdf
         reg = self.flag_register
         if not val:
@@ -1859,13 +2656,34 @@ class SPARC(Architecture):
         return flags_to_human(val, self.flags_table)
 
     def is_call(self, insn):
+        """
+        Returns true if the call is callable.
+
+        Args:
+            self: (todo): write your description
+            insn: (todo): write your description
+        """
         return False
 
     def is_ret(self, insn):
+        """
+        Return true if the instruction is retried false otherwise.
+
+        Args:
+            self: (todo): write your description
+            insn: (todo): write your description
+        """
         # TODO: rett?
         return insn.mnemonic == "ret"
 
     def is_conditional_branch(self, insn):
+        """
+        Return true if the branch branch branch.
+
+        Args:
+            self: (todo): write your description
+            insn: (todo): write your description
+        """
         mnemo = insn.mnemonic
         # http://moss.csc.ncsu.edu/~mueller/codeopt/codeopt00/notes/condbranch.html
         branch_mnemos = {
@@ -1875,6 +2693,13 @@ class SPARC(Architecture):
         return mnemo in branch_mnemos
 
     def is_branch_taken(self, insn):
+        """
+        Check that the branch is_branch.
+
+        Args:
+            self: (todo): write your description
+            insn: (todo): write your description
+        """
         mnemo = insn.mnemonic
         flags = dict((self.flags_table[k], k) for k in self.flags_table)
         val = get_register(self.flag_register)
@@ -1899,6 +2724,14 @@ class SPARC(Architecture):
         return taken, reason
 
     def get_ra(self, insn, frame):
+        """
+        Return the frame at the given position.
+
+        Args:
+            self: (todo): write your description
+            insn: (str): write your description
+            frame: (todo): write your description
+        """
         ra = None
         if self.is_ret(insn):
             ra = get_register("$o7")
@@ -1908,6 +2741,15 @@ class SPARC(Architecture):
 
     @classmethod
     def mprotect_asm(cls, addr, size, perm):
+        """
+        Generate mprotect mprotect mprotect
+
+        Args:
+            cls: (todo): write your description
+            addr: (array): write your description
+            size: (int): write your description
+            perm: (array): write your description
+        """
         hi = (addr & 0xffff0000) >> 16
         lo = (addr & 0x0000ffff)
         _NR_mprotect = 125
@@ -1974,20 +2816,55 @@ class MIPS(Architecture):
     syscall_instructions = ["syscall"]
 
     def flag_register_to_human(self, val=None):
+        """
+        Convert a rgb color
+
+        Args:
+            self: (todo): write your description
+            val: (todo): write your description
+        """
         return Color.colorify("No flag register", attrs="yellow underline")
 
     def is_call(self, insn):
+        """
+        Returns true if the call is callable.
+
+        Args:
+            self: (todo): write your description
+            insn: (todo): write your description
+        """
         return False
 
     def is_ret(self, insn):
+        """
+        Returns true if the instruction is retried false otherwise.
+
+        Args:
+            self: (todo): write your description
+            insn: (todo): write your description
+        """
         return insn.mnemonic == "jr" and insn.operands[0] == "ra"
 
     def is_conditional_branch(self, insn):
+        """
+        Returns true if branch is_conditional.
+
+        Args:
+            self: (todo): write your description
+            insn: (todo): write your description
+        """
         mnemo = insn.mnemonic
         branch_mnemos = {"beq", "bne", "beqz", "bnez", "bgtz", "bgez", "bltz", "blez"}
         return mnemo in branch_mnemos
 
     def is_branch_taken(self, insn):
+        """
+        Check if a branch is a branch.
+
+        Args:
+            self: (todo): write your description
+            insn: (todo): write your description
+        """
         mnemo, ops = insn.mnemonic, insn.operands
         taken, reason = False, ""
 
@@ -2010,6 +2887,14 @@ class MIPS(Architecture):
         return taken, reason
 
     def get_ra(self, insn, frame):
+        """
+        Return the frame at the given position.
+
+        Args:
+            self: (todo): write your description
+            insn: (str): write your description
+            frame: (todo): write your description
+        """
         ra = None
         if self.is_ret(insn):
             ra = get_register("$ra")
@@ -2019,6 +2904,15 @@ class MIPS(Architecture):
 
     @classmethod
     def mprotect_asm(cls, addr, size, perm):
+        """
+        Generate a mprotect string. mprotect.
+
+        Args:
+            cls: (todo): write your description
+            addr: (array): write your description
+            size: (int): write your description
+            perm: (array): write your description
+        """
         _NR_mprotect = 4125
         insns = ["addi $sp, $sp, -16",
                  "sw $v0, 0($sp)", "sw $a0, 4($sp)",
@@ -2097,6 +2991,11 @@ def only_if_gdb_running(f):
     """Decorator wrapper to check if GDB is running."""
     @functools.wraps(f)
     def wrapper(*args, **kwargs):
+        """
+        Decorator to raise an : class.
+
+        Args:
+        """
         if is_alive():
             return f(*args, **kwargs)
         else:
@@ -2108,6 +3007,11 @@ def only_if_gdb_target_local(f):
     """Decorator wrapper to check if GDB is running locally (target not remote)."""
     @functools.wraps(f)
     def wrapper(*args, **kwargs):
+        """
+        Decorator to debug debug messages.
+
+        Args:
+        """
         if not is_remote_debug():
             return f(*args, **kwargs)
         else:
@@ -2119,6 +3023,11 @@ def experimental_feature(f):
     """Decorator to add a warning when a feature is experimental."""
     @functools.wraps(f)
     def wrapper(*args, **kwargs):
+        """
+        Decorator to raise a function as a warning.
+
+        Args:
+        """
         warn("This feature is under development, expect bugs and unstability...")
         return f(*args, **kwargs)
     return wrapper
@@ -2127,7 +3036,18 @@ def experimental_feature(f):
 def only_if_gdb_version_higher_than(required_gdb_version):
     """Decorator to check whether current GDB version requirements."""
     def wrapper(f):
+        """
+        Decorator for gdb a gdb - gdb.
+
+        Args:
+            f: (int): write your description
+        """
         def inner_f(*args, **kwargs):
+            """
+            Decorator for gdb.
+
+            Args:
+            """
             if GDB_VERSION >= required_gdb_version:
                 f(*args, **kwargs)
             else:
@@ -2138,18 +3058,33 @@ def only_if_gdb_version_higher_than(required_gdb_version):
 
 
 def use_stdtype():
+    """
+    Return the standard type of the standard output.
+
+    Args:
+    """
     if   is_elf32(): return "uint32_t"
     elif is_elf64(): return "uint64_t"
     return "uint16_t"
 
 
 def use_default_type():
+    """
+    Returns the default type.
+
+    Args:
+    """
     if   is_elf32(): return "unsigned int"
     elif is_elf64(): return "unsigned long"
     return "unsigned short"
 
 
 def use_golang_type():
+    """
+    Returns a golang type.
+
+    Args:
+    """
     if   is_elf32(): return "uint32"
     elif is_elf64(): return "uint64"
     return "uint16"
@@ -2172,6 +3107,11 @@ def get_register(regname):
 
 
 def get_path_from_info_proc():
+    """
+    Return the path of the process from the process
+
+    Args:
+    """
     for x in gdb.execute("info proc", to_string=True).splitlines():
         if x.startswith("exe = "):
             return x.split(" = ")[1].replace("'", "")
@@ -2460,6 +3400,12 @@ def is_hex(pattern):
 
 
 def ida_synchronize_handler(event):
+    """
+    Called when the event handler.
+
+    Args:
+        event: (todo): write your description
+    """
     gdb.execute("ida-interact Sync", from_tty=True, to_string=True)
     return
 
@@ -2556,6 +3502,15 @@ def get_generic_running_arch(module, prefix, to_string=False):
 
 
 def get_unicorn_arch(arch=None, mode=None, endian=None, to_string=False):
+    """
+    Return the architecture architecture architecture.
+
+    Args:
+        arch: (str): write your description
+        mode: (str): write your description
+        endian: (str): write your description
+        to_string: (str): write your description
+    """
     unicorn = sys.modules["unicorn"]
     if (arch, mode, endian) == (None,None,None):
         return get_generic_running_arch(unicorn, "UC", to_string)
@@ -2563,6 +3518,15 @@ def get_unicorn_arch(arch=None, mode=None, endian=None, to_string=False):
 
 
 def get_capstone_arch(arch=None, mode=None, endian=None, to_string=False):
+    """
+    Return the architecture architecture.
+
+    Args:
+        arch: (str): write your description
+        mode: (str): write your description
+        endian: (str): write your description
+        to_string: (str): write your description
+    """
     capstone = sys.modules["capstone"]
 
     # hacky patch to unify capstone/ppc syntax with keystone & unicorn:
@@ -2590,6 +3554,15 @@ def get_capstone_arch(arch=None, mode=None, endian=None, to_string=False):
 
 
 def get_keystone_arch(arch=None, mode=None, endian=None, to_string=False):
+    """
+    Return architecture architecture architecture.
+
+    Args:
+        arch: (str): write your description
+        mode: (str): write your description
+        endian: (str): write your description
+        to_string: (str): write your description
+    """
     keystone = sys.modules["keystone"]
     if (arch, mode, endian) == (None,None,None):
         return get_generic_running_arch(keystone, "KS", to_string)
@@ -2781,6 +3754,12 @@ def set_arch(arch=None, default=None):
 
 @lru_cache()
 def cached_lookup_type(_type):
+    """
+    Return the type of a cached type.
+
+    Args:
+        _type: (str): write your description
+    """
     try:
         return gdb.lookup_type(_type).strip_typedefs()
     except RuntimeError:
@@ -2855,6 +3834,12 @@ def parse_address(address):
 
 
 def is_in_x86_kernel(address):
+    """
+    Check if an address is in an address is in x8686 kernel.
+
+    Args:
+        address: (str): write your description
+    """
     address = align_address(address)
     memalign = get_memory_alignment(in_bits=True) - 1
     return (address >> memalign) == 0xF
@@ -2862,6 +3847,11 @@ def is_in_x86_kernel(address):
 
 @lru_cache()
 def endian_str():
+    """
+    Return a string representation of the endian header.
+
+    Args:
+    """
     elf = current_elf or get_elf_headers()
     return "<" if elf.e_endianness == Elf.LITTLE_ENDIAN else ">"
 
@@ -2877,6 +3867,13 @@ def de_bruijn(alphabet, n):
     k = len(alphabet)
     a = [0] * k * n
     def db(t, p):
+        """
+        Yields the index p.
+
+        Args:
+            t: (int): write your description
+            p: (int): write your description
+        """
         if t > n:
             if n % p == 0:
                 for j in range(1, p + 1):
@@ -2933,6 +3930,12 @@ def dereference(addr):
 
 
 def dereference_as_long(addr):
+    """
+    Dereference_as_as_as_as_as_long.
+
+    Args:
+        addr: (todo): write your description
+    """
     derefed = dereference(addr)
     return long(derefed.address) if derefed is not None else 0
 
@@ -2979,6 +3982,12 @@ def gef_read_canary():
 
 
 def gef_get_pie_breakpoint(num):
+    """
+    Get the breakpoint at least one breakpoint.
+
+    Args:
+        num: (int): write your description
+    """
     global __pie_breakpoints__
     return __pie_breakpoints__[num]
 
@@ -2995,7 +4004,18 @@ def gef_getpagesize():
 def only_if_events_supported(event_type):
     """Checks if GDB supports events without crashing."""
     def wrap(f):
+        """
+        Wraps a function as a gdb.
+
+        Args:
+            f: (todo): write your description
+        """
         def wrapped_f(*args, **kwargs):
+            """
+            Decorator for a gdb.
+
+            Args:
+            """
             if getattr(gdb, "events") and getattr(gdb.events, event_type):
                 return f(*args, **kwargs)
             warn("GDB events cannot be set")
@@ -3008,23 +4028,71 @@ def only_if_events_supported(event_type):
 #
 
 @only_if_events_supported("cont")
+"""
+Decorator to add a callback.
+
+Args:
+    func: (callable): write your description
+"""
 def gef_on_continue_hook(func): return gdb.events.cont.connect(func)
 @only_if_events_supported("cont")
+"""
+Decorator for a callback function.
+
+Args:
+    func: (callable): write your description
+"""
 def gef_on_continue_unhook(func): return gdb.events.cont.disconnect(func)
 
 @only_if_events_supported("stop")
+"""
+Return a function that will be called function.
+
+Args:
+    func: (callable): write your description
+"""
 def gef_on_stop_hook(func): return gdb.events.stop.connect(func)
 @only_if_events_supported("stop")
+"""
+Decorator from a function.
+
+Args:
+    func: (callable): write your description
+"""
 def gef_on_stop_unhook(func): return gdb.events.stop.disconnect(func)
 
 @only_if_events_supported("exited")
+"""
+Decorator for the given func.
+
+Args:
+    func: (callable): write your description
+"""
 def gef_on_exit_hook(func): return gdb.events.exited.connect(func)
 @only_if_events_supported("exited")
+"""
+Decorator for a callback.
+
+Args:
+    func: (callable): write your description
+"""
 def gef_on_exit_unhook(func): return gdb.events.exited.disconnect(func)
 
 @only_if_events_supported("new_objfile")
+"""
+Decorator to add a new function.
+
+Args:
+    func: (callable): write your description
+"""
 def gef_on_new_hook(func): return gdb.events.new_objfile.connect(func)
 @only_if_events_supported("new_objfile")
+"""
+Disconnect a callback for a callback. gdb callback.
+
+Args:
+    func: (callable): write your description
+"""
 def gef_on_new_unhook(func): return gdb.events.new_objfile.disconnect(func)
 
 
@@ -3035,6 +4103,15 @@ def gef_on_new_unhook(func): return gdb.events.new_objfile.disconnect(func)
 class PieVirtualBreakpoint(object):
     """PIE virtual breakpoint (not real breakpoint)."""
     def __init__(self, set_func, vbp_num, addr):
+        """
+        Initialize a vbp function.
+
+        Args:
+            self: (todo): write your description
+            set_func: (todo): write your description
+            vbp_num: (int): write your description
+            addr: (todo): write your description
+        """
         # set_func(base): given a base address return a
         # set breakpoint gdb command string
         self.set_func = set_func
@@ -3049,6 +4126,13 @@ class PieVirtualBreakpoint(object):
             self.addr = addr
 
     def instantiate(self, base):
+        """
+        Instantiates the current instance from the database.
+
+        Args:
+            self: (todo): write your description
+            base: (todo): write your description
+        """
         if self.bp_num:
             self.destroy()
 
@@ -3067,6 +4151,12 @@ class PieVirtualBreakpoint(object):
         self.bp_addr = res_list[3]
 
     def destroy(self):
+        """
+        Destroys the graph.
+
+        Args:
+            self: (todo): write your description
+        """
         if not self.bp_num:
             err("Destroy PIE breakpoint not even set")
             return
@@ -3080,12 +4170,26 @@ class PieVirtualBreakpoint(object):
 class FormatStringBreakpoint(gdb.Breakpoint):
     """Inspect stack for format string"""
     def __init__(self, spec, num_args):
+        """
+        Initialize the interface
+
+        Args:
+            self: (todo): write your description
+            spec: (todo): write your description
+            num_args: (int): write your description
+        """
         super(FormatStringBreakpoint, self).__init__(spec, type=gdb.BP_BREAKPOINT, internal=False)
         self.num_args = num_args
         self.enabled = True
         return
 
     def stop(self):
+        """
+        !
+
+        Args:
+            self: (todo): write your description
+        """
         msg = []
         if is_x86_32():
             sp = current_arch.sp
@@ -3119,6 +4223,14 @@ class StubBreakpoint(gdb.Breakpoint):
     """Create a breakpoint to permanently disable a call (fork/alarm/signal/etc.)"""
 
     def __init__(self, func, retval):
+        """
+        Initialize the function.
+
+        Args:
+            self: (todo): write your description
+            func: (callable): write your description
+            retval: (todo): write your description
+        """
         super(StubBreakpoint, self).__init__(func, gdb.BP_BREAKPOINT, internal=False)
         self.func = func
         self.retval = retval
@@ -3130,6 +4242,12 @@ class StubBreakpoint(gdb.Breakpoint):
         return
 
     def stop(self):
+        """
+        Stop the timer
+
+        Args:
+            self: (todo): write your description
+        """
         m = "Ignoring call to '{:s}' ".format(self.func)
         m+= "(setting return value to {:#x})".format(self.retval)
         gdb.execute("return (unsigned int){:#x}".format(self.retval))
@@ -3142,12 +4260,27 @@ class ChangePermissionBreakpoint(gdb.Breakpoint):
     $pc correctly."""
 
     def __init__(self, loc, code, pc):
+        """
+        Initialize a new timer.
+
+        Args:
+            self: (todo): write your description
+            loc: (tuple): write your description
+            code: (int): write your description
+            pc: (int): write your description
+        """
         super(ChangePermissionBreakpoint, self).__init__(loc, gdb.BP_BREAKPOINT, internal=False)
         self.original_code = code
         self.original_pc = pc
         return
 
     def stop(self):
+        """
+        Stop the code.
+
+        Args:
+            self: (todo): write your description
+        """
         info("Restoring original context")
         write_memory(self.original_pc, self.original_code, len(self.original_code))
         info("Restoring $pc")
@@ -3159,11 +4292,24 @@ class TraceMallocBreakpoint(gdb.Breakpoint):
     """Track allocations done with malloc() or calloc."""
 
     def __init__(self, name):
+        """
+        Initialize the gdb.
+
+        Args:
+            self: (todo): write your description
+            name: (str): write your description
+        """
         super(TraceMallocBreakpoint, self).__init__(name, gdb.BP_BREAKPOINT, internal=True)
         self.silent = True
         return
 
     def stop(self):
+        """
+        Stop the stoppoint.
+
+        Args:
+            self: (todo): write your description
+        """
         if is_x86_32():
             # if intel x32, the malloc size is in the stack, so we need to dereference $sp
             size = to_unsigned_long(dereference( current_arch.sp+4 ))
@@ -3178,6 +4324,13 @@ class TraceMallocRetBreakpoint(gdb.FinishBreakpoint):
     """Internal temporary breakpoint to retrieve the return value of malloc()."""
 
     def __init__(self, size):
+        """
+        Initialize frame.
+
+        Args:
+            self: (todo): write your description
+            size: (int): write your description
+        """
         super(TraceMallocRetBreakpoint, self).__init__(gdb.newest_frame(), internal=True)
         self.size = size
         self.silent = True
@@ -3185,6 +4338,12 @@ class TraceMallocRetBreakpoint(gdb.FinishBreakpoint):
 
 
     def stop(self):
+        """
+        Stops the stoppoints.
+
+        Args:
+            self: (todo): write your description
+        """
         global __heap_uaf_watchpoints__, __heap_freed_list__, __heap_allocated_list__
 
         if self.return_value:
@@ -3249,11 +4408,23 @@ class TraceReallocBreakpoint(gdb.Breakpoint):
     """Track re-allocations done with realloc()."""
 
     def __init__(self):
+        """
+        Initialize the superclass
+
+        Args:
+            self: (todo): write your description
+        """
         super(TraceReallocBreakpoint, self).__init__("__libc_realloc", gdb.BP_BREAKPOINT, internal=True)
         self.silent = True
         return
 
     def stop(self):
+        """
+        Stop a stoppoint.
+
+        Args:
+            self: (todo): write your description
+        """
         if is_x86_32():
             ptr = to_unsigned_long(dereference( current_arch.sp+4 ))
             size = to_unsigned_long(dereference( current_arch.sp+8 ))
@@ -3268,6 +4439,14 @@ class TraceReallocRetBreakpoint(gdb.FinishBreakpoint):
     """Internal temporary breakpoint to retrieve the return value of realloc()."""
 
     def __init__(self, ptr, size):
+        """
+        Initialize frame.
+
+        Args:
+            self: (todo): write your description
+            ptr: (int): write your description
+            size: (int): write your description
+        """
         super(TraceReallocRetBreakpoint, self).__init__(gdb.newest_frame(), internal=True)
         self.ptr = ptr
         self.size = size
@@ -3275,6 +4454,12 @@ class TraceReallocRetBreakpoint(gdb.FinishBreakpoint):
         return
 
     def stop(self):
+        """
+        Stops the heap.
+
+        Args:
+            self: (todo): write your description
+        """
         global __heap_uaf_watchpoints__, __heap_freed_list__, __heap_allocated_list__
 
         if self.return_value:
@@ -3312,11 +4497,23 @@ class TraceFreeBreakpoint(gdb.Breakpoint):
     """Track calls to free() and attempts to detect inconsistencies."""
 
     def __init__(self):
+        """
+        Initialize the gdb
+
+        Args:
+            self: (todo): write your description
+        """
         super(TraceFreeBreakpoint, self).__init__("__libc_free", gdb.BP_BREAKPOINT, internal=True)
         self.silent = True
         return
 
     def stop(self):
+        """
+        Stops the link.
+
+        Args:
+            self: (todo): write your description
+        """
         if is_x86_32():
             # if intel x32, the free address is in the stack, so we need to dereference $sp
             addr = to_unsigned_long(dereference( current_arch.sp+4 ))
@@ -3378,12 +4575,25 @@ class TraceFreeRetBreakpoint(gdb.FinishBreakpoint):
     """Internal temporary breakpoint to track free-ed values."""
 
     def __init__(self, addr):
+        """
+        Initialize the interface.
+
+        Args:
+            self: (todo): write your description
+            addr: (todo): write your description
+        """
         super(TraceFreeRetBreakpoint, self).__init__(gdb.newest_frame(), internal=True)
         self.silent = True
         self.addr = addr
         return
 
     def stop(self):
+        """
+        Stops the wafWatch.
+
+        Args:
+            self: (todo): write your description
+        """
         wp = UafWatchpoint(self.addr)
         __heap_uaf_watchpoints__.append(wp)
         ok("{} - watching {:#x}".format(Color.colorify("Heap-Analysis", attrs="yellow bold"), self.addr))
@@ -3394,6 +4604,13 @@ class UafWatchpoint(gdb.Breakpoint):
     """Custom watchpoints set TraceFreeBreakpoint() to monitor free-ed pointers being used."""
 
     def __init__(self, addr):
+        """
+        Initialize the address.
+
+        Args:
+            self: (todo): write your description
+            addr: (todo): write your description
+        """
         super(UafWatchpoint, self).__init__("*{:#x}".format(addr), gdb.BP_WATCHPOINT, internal=True)
         self.address = addr
         self.silent = True
@@ -3421,11 +4638,24 @@ class EntryBreakBreakpoint(gdb.Breakpoint):
     """Breakpoint used internally to stop execution at the most convenient entry point."""
 
     def __init__(self, location):
+        """
+        Initialize the database.
+
+        Args:
+            self: (todo): write your description
+            location: (str): write your description
+        """
         super(EntryBreakBreakpoint, self).__init__(location, gdb.BP_BREAKPOINT, internal=True, temporary=True)
         self.silent = True
         return
 
     def stop(self):
+        """
+        Stops the stream.
+
+        Args:
+            self: (todo): write your description
+        """
         return True
 
 
@@ -3464,6 +4694,12 @@ class GenericCommand(gdb.Command):
     __metaclass__ = abc.ABCMeta
 
     def __init__(self, *args, **kwargs):
+        """
+        Initialize the module.
+
+        Args:
+            self: (todo): write your description
+        """
         self.pre_load()
         syntax = Color.yellowify("\nSyntax: ") + self._syntax_
         example = Color.yellowify("\nExample: ") + self._example_ if self._example_ else ""
@@ -3476,6 +4712,13 @@ class GenericCommand(gdb.Command):
         return
 
     def invoke(self, args, from_tty):
+        """
+        Invoke the command.
+
+        Args:
+            self: (todo): write your description
+            from_tty: (todo): write your description
+        """
         try:
             argv = gdb.string_to_argv(args)
             #bufferize(self.do_invoke(argv))
@@ -3490,27 +4733,83 @@ class GenericCommand(gdb.Command):
         return
 
     def usage(self):
+        """
+        Return the usage string.
+
+        Args:
+            self: (todo): write your description
+        """
         err("Syntax\n{}".format(self._syntax_))
         return
 
     @abc.abstractproperty
+    """
+    Cmdline cmdline command.
+
+    Args:
+        self: (todo): write your description
+    """
     def _cmdline_(self): pass
 
     @abc.abstractproperty
+    """
+    : return : class :.
+
+    Args:
+        self: (todo): write your description
+    """
     def _syntax_(self): pass
 
     @abc.abstractproperty
+    """
+    Returns an example string.
+
+    Args:
+        self: (todo): write your description
+    """
     def _example_(self): return ""
 
     @abc.abstractmethod
+    """
+    Invoke the given command with the specified argv.
+
+    Args:
+        self: (todo): write your description
+        argv: (list): write your description
+    """
     def do_invoke(self, argv): pass
 
+    """
+    Pre_load
+
+    Args:
+        self: (todo): write your description
+    """
     def pre_load(self): pass
 
+    """
+    Post - load load
+
+    Args:
+        self: (todo): write your description
+    """
     def post_load(self): pass
 
     def __get_setting_name(self, name):
+        """
+        Returns the name of the class.
+
+        Args:
+            self: (todo): write your description
+            name: (str): write your description
+        """
         def __sanitize_class_name(clsname):
+            """
+            Sanitize a class name.
+
+            Args:
+                clsname: (str): write your description
+            """
             if " " not in clsname:
                 return clsname
             return "-".join(clsname.split())
@@ -3525,20 +4824,50 @@ class GenericCommand(gdb.Command):
                  if x.startswith("{:s}.".format(self._cmdline_)) ]
 
     def get_setting(self, name):
+        """
+        Get the value of a setting.
+
+        Args:
+            self: (todo): write your description
+            name: (str): write your description
+        """
         key = self.__get_setting_name(name)
         setting = __config__[key]
         return setting[1](setting[0])
 
     def has_setting(self, name):
+        """
+        Returns true if the named config setting exists.
+
+        Args:
+            self: (todo): write your description
+            name: (str): write your description
+        """
         key = self.__get_setting_name(name)
         return key in __config__
 
     def add_setting(self, name, value, description=""):
+        """
+        Add a setting.
+
+        Args:
+            self: (todo): write your description
+            name: (str): write your description
+            value: (todo): write your description
+            description: (str): write your description
+        """
         key = self.__get_setting_name(name)
         __config__[key] = [value, type(value), description]
         return
 
     def del_setting(self, name):
+        """
+        Removes a setting.
+
+        Args:
+            self: (todo): write your description
+            name: (str): write your description
+        """
         key = self.__get_setting_name(name)
         del __config__[key]
         return
@@ -3571,10 +4900,22 @@ class PrintFormatCommand(GenericCommand):
     asm_type = {8: 'db', 16: 'dw', 32: 'dd', 64: 'dq'}
 
     def __init__(self):
+        """
+        Initialize the command
+
+        Args:
+            self: (todo): write your description
+        """
         super(PrintFormatCommand, self).__init__(complete=gdb.COMPLETE_LOCATION)
         return
 
     def usage(self):
+        """
+        Returns the usage string.
+
+        Args:
+            self: (todo): write your description
+        """
         h = self._syntax_
         h += "\n\t-f FORMAT specifies the output format for programming language, avaliable value is py, c, js, asm (default py).\n"
         h += "\t-b BITSIZE sepecifies size of bit, avaliable values is 8, 16, 32, 64 (default is 8).\n"
@@ -3585,6 +4926,13 @@ class PrintFormatCommand(GenericCommand):
         return
 
     def clip(self, data):
+        """
+        Clip data to a pbc image.
+
+        Args:
+            self: (todo): write your description
+            data: (array): write your description
+        """
         if sys.platform == "linux":
             xclip = which("xclip")
             prog = [xclip, "-selection", "clipboard", "-i"] # For linux
@@ -3680,10 +5028,23 @@ class PieCommand(GenericCommand):
     _syntax_  = "{:s} (breakpoint|info|delete|run|attach|remote)".format(_cmdline_)
 
     def __init__(self):
+        """
+        Initialize the command
+
+        Args:
+            self: (todo): write your description
+        """
         super(PieCommand, self).__init__(prefix=True)
         return
 
     def do_invoke(self, argv):
+        """
+        Called when a command.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         if not argv:
             self.usage()
         return
@@ -3697,6 +5058,13 @@ class PieBreakpointCommand(GenericCommand):
     _syntax_  = "{:s} BREAKPOINT".format(_cmdline_)
 
     def do_invoke(self, argv):
+        """
+        [ ~thread ]
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         global __pie_counter__, __pie_breakpoints__
         if len(argv) < 1:
             self.usage()
@@ -3722,6 +5090,13 @@ class PieBreakpointCommand(GenericCommand):
 
     @staticmethod
     def set_pie_breakpoint(set_func, addr):
+        """
+        Sets the breakpoint at the given address.
+
+        Args:
+            set_func: (todo): write your description
+            addr: (int): write your description
+        """
         global __pie_counter__, __pie_breakpoints__
         __pie_breakpoints__[__pie_counter__] = PieVirtualBreakpoint(set_func, __pie_counter__, addr)
         __pie_counter__ += 1
@@ -3735,6 +5110,13 @@ class PieInfoCommand(GenericCommand):
     _syntax_  = "{:s} BREAKPOINT".format(_cmdline_)
 
     def do_invoke(self, argv):
+        """
+        The main function.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         global __pie_breakpoints__
         if len(argv) < 1:
             # No breakpoint info needed
@@ -3761,6 +5143,13 @@ class PieDeleteCommand(GenericCommand):
     _syntax_  = "{:s} [BREAKPOINT]".format(_cmdline_)
 
     def do_invoke(self, argv):
+        """
+        Delete breakpoints.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         global __pie_breakpoints__
         if len(argv) < 1:
             # no arg, delete all
@@ -3773,6 +5162,12 @@ class PieDeleteCommand(GenericCommand):
 
     @staticmethod
     def delete_bp(breakpoints):
+        """
+        Deletes all breakpoints.
+
+        Args:
+            breakpoints: (todo): write your description
+        """
         global __pie_breakpoints__
         for bp in breakpoints:
             # delete current real breakpoints if exists
@@ -3791,6 +5186,13 @@ class PieRunCommand(GenericCommand):
     _syntax_  = _cmdline_
 
     def do_invoke(self, argv):
+        """
+        ::
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         global __pie_breakpoints__
         fpath = get_filepath()
         if fpath is None:
@@ -3833,6 +5235,13 @@ class PieAttachCommand(GenericCommand):
     _syntax_  = "{:s} PID".format(_cmdline_)
 
     def do_invoke(self, argv):
+        """
+        Executes the function.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         try:
             gdb.execute("attach {}".format(" ".join(argv)), to_string=True)
         except gdb.error as e:
@@ -3856,6 +5265,13 @@ class PieRemoteCommand(GenericCommand):
     _syntax_  = "{:s} REMOTE".format(_cmdline_)
 
     def do_invoke(self, argv):
+        """
+        Main function.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         try:
             gdb.execute("gef-remote {}".format(" ".join(argv)))
         except gdb.error as e:
@@ -3879,6 +5295,13 @@ class SmartEvalCommand(GenericCommand):
     _example_ = "\n{0:s} $pc+1\n{0:s} 0x00007ffff7a10000 0x00007ffff7bce000".format(_cmdline_)
 
     def do_invoke(self, argv):
+        """
+        Evaluate the given function.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         argc = len(argv)
         if argc==1:
             self.evaluate(argv)
@@ -3889,9 +5312,34 @@ class SmartEvalCommand(GenericCommand):
         return
 
     def evaluate(self, expr):
+        """
+        Evaluate a geojson expression.
+
+        Args:
+            self: (todo): write your description
+            expr: (todo): write your description
+        """
         def show_as_int(i):
+            """
+            Input : { bytes
+
+            Args:
+                i: (todo): write your description
+            """
             off = current_arch.ptrsize*8
+            """
+            Convert x
+
+            Args:
+                x: (todo): write your description
+            """
             def comp2_x(x): return "{:x}".format((x + (1 << off)) % (1 << off))
+            """
+            Comp2 - > b
+
+            Args:
+                x: (todo): write your description
+            """
             def comp2_b(x): return "{:b}".format((x + (1 << off)) % (1 << off))
 
             try:
@@ -3926,6 +5374,12 @@ class SmartEvalCommand(GenericCommand):
         return
 
     def distance(self, args):
+        """
+        Control distance
+
+        Args:
+            self: (todo): write your description
+        """
         try:
             x = int(args[0], 16) if is_hex(args[0]) else int(args[0])
             y = int(args[1], 16) if is_hex(args[1]) else int(args[1])
@@ -3945,6 +5399,13 @@ class CanaryCommand(GenericCommand):
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        Invoke the command - fork
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         self.dont_repeat()
 
         has_canary = checksec(get_filepath())["Canary"]
@@ -3973,12 +5434,25 @@ class ProcessStatusCommand(GenericCommand):
     _aliases_ = ["status", ]
 
     def __init__(self):
+        """
+        Initialize the process.
+
+        Args:
+            self: (todo): write your description
+        """
         super(ProcessStatusCommand, self).__init__(complete=gdb.COMPLETE_NONE)
         return
 
     @only_if_gdb_running
     @only_if_gdb_target_local
     def do_invoke(self, argv):
+        """
+        Executes the specified method
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         self.show_info_proc()
         self.show_ancestor()
         self.show_descendants()
@@ -3987,6 +5461,13 @@ class ProcessStatusCommand(GenericCommand):
         return
 
     def get_state_of(self, pid):
+        """
+        Get the state of a container.
+
+        Args:
+            self: (todo): write your description
+            pid: (str): write your description
+        """
         res = {}
         for line in open("/proc/{}/status".format(pid), "r"):
             key, value = line.split(":", 1)
@@ -3994,12 +5475,33 @@ class ProcessStatusCommand(GenericCommand):
         return res
 
     def get_cmdline_of(self, pid):
+        """
+        Get the pid of a pid file.
+
+        Args:
+            self: (todo): write your description
+            pid: (int): write your description
+        """
         return open("/proc/{}/cmdline".format(pid), "r").read().replace("\x00", "\x20").strip()
 
     def get_process_path_of(self, pid):
+        """
+        Return the pid of a process.
+
+        Args:
+            self: (todo): write your description
+            pid: (int): write your description
+        """
         return os.readlink("/proc/{}/exe".format(pid))
 
     def get_children_pids(self, pid):
+        """
+        Return a list of pid.
+
+        Args:
+            self: (todo): write your description
+            pid: (int): write your description
+        """
         ps = which("ps")
         cmd = [ps, "-o", "pid", "--ppid","{}".format(pid), "--noheaders"]
         try:
@@ -4008,6 +5510,12 @@ class ProcessStatusCommand(GenericCommand):
             return []
 
     def show_info_proc(self):
+        """
+        Return information about a process
+
+        Args:
+            self: (todo): write your description
+        """
         info("Process Information")
         pid = get_pid()
         cmdline = self.get_cmdline_of(pid)
@@ -4017,6 +5525,12 @@ class ProcessStatusCommand(GenericCommand):
         return
 
     def show_ancestor(self):
+        """
+        Show current pid.
+
+        Args:
+            self: (todo): write your description
+        """
         info("Parent Process Information")
         ppid = int(self.get_state_of(get_pid())["PPid"])
         state = self.get_state_of(ppid)
@@ -4026,6 +5540,12 @@ class ProcessStatusCommand(GenericCommand):
         return
 
     def show_descendants(self):
+        """
+        Show descendants of all descendants.
+
+        Args:
+            self: (todo): write your description
+        """
         info("Children Process Information")
         children = self.get_children_pids(get_pid())
         if not children:
@@ -4042,6 +5562,12 @@ class ProcessStatusCommand(GenericCommand):
             return
 
     def show_fds(self):
+        """
+        Return pid of the fds
+
+        Args:
+            self: (todo): write your description
+        """
         pid = get_pid()
         path = "/proc/{:d}/fd".format(pid)
 
@@ -4058,6 +5584,13 @@ class ProcessStatusCommand(GenericCommand):
         return
 
     def list_sockets(self, pid):
+        """
+        Return a list of all pid entries.
+
+        Args:
+            self: (todo): write your description
+            pid: (int): write your description
+        """
         sockets = []
         path = "/proc/{:d}/fd".format(pid)
         items = os.listdir(path)
@@ -4069,10 +5602,23 @@ class ProcessStatusCommand(GenericCommand):
         return sockets
 
     def parse_ip_port(self, addr):
+        """
+        Parse an ip address.
+
+        Args:
+            self: (todo): write your description
+            addr: (str): write your description
+        """
         ip, port = addr.split(":")
         return socket.inet_ntoa(struct.pack("<I", int(ip, 16))), int(port, 16)
 
     def show_connections(self):
+        """
+        Show all connected connections.
+
+        Args:
+            self: (todo): write your description
+        """
         # https://github.com/torvalds/linux/blob/v4.7/include/net/tcp_states.h#L16
         tcp_states_str = {
             0x01: "TCP_ESTABLISHED",
@@ -4128,6 +5674,12 @@ class GefThemeCommand(GenericCommand):
     _syntax_  = "{:s} [KEY [VALUE]]".format(_cmdline_)
 
     def __init__(self, *args, **kwargs):
+        """
+        Initialize a setting setting.
+
+        Args:
+            self: (todo): write your description
+        """
         super(GefThemeCommand, self).__init__(GefThemeCommand._cmdline_)
         self.add_setting("context_title_line", "green bold", "Color of the borders in context window")
         self.add_setting("context_title_message", "red bold", "Color of the title in context window")
@@ -4148,6 +5700,12 @@ class GefThemeCommand(GenericCommand):
         return
 
     def do_invoke(self, args):
+        """
+        Main function for setting settings
+
+        Args:
+            self: (todo): write your description
+        """
         self.dont_repeat()
         argc = len(args)
 
@@ -4187,12 +5745,25 @@ class PCustomCommand(GenericCommand):
     _syntax_  = "{:s} [-l] [StructA [0xADDRESS] [-e]]".format(_cmdline_)
 
     def __init__(self):
+        """
+        Initialize the tEMP.
+
+        Args:
+            self: (todo): write your description
+        """
         super(PCustomCommand, self).__init__(complete=gdb.COMPLETE_SYMBOL)
         self.add_setting("struct_path", os.path.join(GEF_TEMP_DIR, "structs"),
                          "Path to store/load the structure ctypes files")
         return
 
     def do_invoke(self, argv):
+        """
+        Invoke a method
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         argc = len(argv)
         if argc == 0:
             self.usage()
@@ -4227,23 +5798,51 @@ class PCustomCommand(GenericCommand):
 
 
     def get_struct_path(self):
+        """
+        Returns the path of the structure.
+
+        Args:
+            self: (todo): write your description
+        """
         path = os.path.expanduser(self.get_setting("struct_path"))
         path = os.path.realpath(path)
         return path if os.path.isdir(path) else None
 
 
     def pcustom_filepath(self, x):
+        """
+        Returns the absolute path to the filepath.
+
+        Args:
+            self: (todo): write your description
+            x: (str): write your description
+        """
         p = self.get_struct_path()
         if not p: return None
         return os.path.join(p, "{}.py".format(x))
 
 
     def is_valid_struct(self, x):
+        """
+        Returns true if x is a valid structure.
+
+        Args:
+            self: (todo): write your description
+            x: (array): write your description
+        """
         p = self.pcustom_filepath(x)
         return os.access(p, os.R_OK) if p else None
 
 
     def dump_structure(self, mod_name, struct_name):
+        """
+        Dump a structure of a structure.
+
+        Args:
+            self: (todo): write your description
+            mod_name: (str): write your description
+            struct_name: (str): write your description
+        """
         # If it's a builtin or defined in the ELF use gdb's `ptype`
         try:
             gdb.execute("ptype struct {:s}".format(struct_name))
@@ -4256,6 +5855,14 @@ class PCustomCommand(GenericCommand):
 
 
     def dump_custom_structure(self, mod_name, struct_name):
+        """
+        Dump a structure structure.
+
+        Args:
+            self: (todo): write your description
+            mod_name: (str): write your description
+            struct_name: (str): write your description
+        """
         if not self.is_valid_struct(mod_name):
             err("Invalid structure name '{:s}'".format(struct_name))
             return
@@ -4271,22 +5878,52 @@ class PCustomCommand(GenericCommand):
 
 
     def deserialize(self, struct, data):
+        """
+        Deserializes the given struct.
+
+        Args:
+            self: (todo): write your description
+            struct: (str): write your description
+            data: (todo): write your description
+        """
         length = min(len(data), ctypes.sizeof(struct))
         ctypes.memmove(ctypes.addressof(struct), data, length)
         return
 
 
     def get_module(self, modname):
+        """
+        Returns the module.
+
+        Args:
+            self: (todo): write your description
+            modname: (str): write your description
+        """
         _fullname = self.pcustom_filepath(modname)
         return imp.load_source(modname, _fullname)
 
 
     def get_class(self, modname, classname):
+        """
+        Get the class of the given module.
+
+        Args:
+            self: (todo): write your description
+            modname: (str): write your description
+            classname: (str): write your description
+        """
         _mod = self.get_module(modname)
         return getattr(_mod, classname)()
 
 
     def list_all_structs(self, modname):
+        """
+        Returns a set of all of a module
+
+        Args:
+            self: (todo): write your description
+            modname: (str): write your description
+        """
         _mod = self.get_module(modname)
         _invalid = set(["BigEndianStructure", "LittleEndianStructure", "Structure"])
         _structs = set([x for x in dir(_mod) \
@@ -4296,6 +5933,16 @@ class PCustomCommand(GenericCommand):
 
 
     def apply_structure_to_address(self, mod_name, struct_name, addr, depth=0):
+        """
+        Apply a structure to a structure.
+
+        Args:
+            self: (todo): write your description
+            mod_name: (str): write your description
+            struct_name: (str): write your description
+            addr: (str): write your description
+            depth: (int): write your description
+        """
         if not self.is_valid_struct(mod_name):
             err("Invalid structure name '{:s}'".format(struct_name))
             return
@@ -4341,6 +5988,15 @@ class PCustomCommand(GenericCommand):
 
 
     def get_ctypes_value(self, struct, item, value):
+        """
+        Returns the ctypes value for a given struct.
+
+        Args:
+            self: (todo): write your description
+            struct: (todo): write your description
+            item: (todo): write your description
+            value: (todo): write your description
+        """
         if not hasattr(struct, "_values_"): return ""
         values_list = getattr(struct, "_values_")
         default = ""
@@ -4360,6 +6016,14 @@ class PCustomCommand(GenericCommand):
 
 
     def create_or_edit_structure(self, mod_name, struct_name):
+        """
+        Create or update a structure structure.
+
+        Args:
+            self: (todo): write your description
+            mod_name: (str): write your description
+            struct_name: (str): write your description
+        """
         path = self.get_struct_path()
         if path is None:
             err("Invalid struct path")
@@ -4381,6 +6045,13 @@ class PCustomCommand(GenericCommand):
 
 
     def get_template(self, structname):
+        """
+        Return a string representation of the structure.
+
+        Args:
+            self: (todo): write your description
+            structname: (str): write your description
+        """
         d = [
             b"from ctypes import *\n\n",
             b"class ",
@@ -4392,6 +6063,12 @@ class PCustomCommand(GenericCommand):
 
 
     def list_custom_structures(self):
+        """
+        Returns a list of custom structs.
+
+        Args:
+            self: (todo): write your description
+        """
         path = self.get_struct_path()
         if path is None:
             err("Cannot open '{0}': check directory and/or `gef config {0}` "
@@ -4418,6 +6095,13 @@ class ChangeFdCommand(GenericCommand):
     @only_if_gdb_running
     @only_if_gdb_target_local
     def do_invoke(self, argv):
+        """
+        Executes the command.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         if len(argv)!=2:
             self.usage()
             return
@@ -4489,6 +6173,13 @@ class ChangeFdCommand(GenericCommand):
         return
 
     def get_fd_from_result(self, res):
+        """
+        Get the result from the result.
+
+        Args:
+            self: (todo): write your description
+            res: (str): write your description
+        """
         # Output example: $1 = 3
         return int(res.split()[2], 0)
 
@@ -4506,6 +6197,12 @@ class IdaInteractCommand(GenericCommand):
     _example_ = "\n{0:s} Jump $pc\n{0:s} SetColor $pc ff00ff".format(_cmdline_)
 
     def __init__(self):
+        """
+        Initialize the connection.
+
+        Args:
+            self: (todo): write your description
+        """
         super(IdaInteractCommand, self).__init__(prefix=False)
         host, port = "127.0.0.1", 1337
         self.add_setting("host", host, "IP address to use connect to IDA/Binary Ninja script")
@@ -4518,6 +6215,14 @@ class IdaInteractCommand(GenericCommand):
         return
 
     def is_target_alive(self, host, port):
+        """
+        Determine if a host is connected.
+
+        Args:
+            self: (todo): write your description
+            host: (str): write your description
+            port: (str): write your description
+        """
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.settimeout(1)
@@ -4544,13 +6249,32 @@ class IdaInteractCommand(GenericCommand):
         return
 
     def disconnect(self):
+        """
+        Disconnect from the websocket
+
+        Args:
+            self: (todo): write your description
+        """
         gef_on_stop_unhook(ida_synchronize_handler)
         gef_on_continue_unhook(ida_synchronize_handler)
         self.sock = None
         return
 
     def do_invoke(self, argv):
+        """
+        Executes the command
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         def parsed_arglist(arglist):
+            """
+            Fetch arguments from arglist
+
+            Args:
+                arglist: (list): write your description
+            """
             args = []
             for arg in arglist:
                 try:
@@ -4682,6 +6406,13 @@ class IdaInteractCommand(GenericCommand):
 
 
     def usage(self, meth=None):
+        """
+        Return the usage information for a method.
+
+        Args:
+            self: (todo): write your description
+            meth: (str): write your description
+        """
         if self.sock is None:
             return
 
@@ -4699,6 +6430,13 @@ class IdaInteractCommand(GenericCommand):
 
 
     def import_structures(self, structs):
+        """
+        Import all structs in structure
+
+        Args:
+            self: (todo): write your description
+            structs: (str): write your description
+        """
         if self.version[0] != "IDA Pro":
             return
 
@@ -4805,6 +6543,13 @@ class SearchPatternCommand(GenericCommand):
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        Execute the command.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         argc = len(argv)
         if argc < 1:
             self.usage()
@@ -4831,6 +6576,13 @@ class FlagsCommand(GenericCommand):
     _example_ = "\n{0:s}\n{0:s} +zero # sets ZERO flag".format(_cmdline_)
 
     def do_invoke(self, argv):
+        """
+        Invoke [...
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         for flag in argv:
             if len(flag)<2:
                 continue
@@ -4875,10 +6627,22 @@ class ChangePermissionCommand(GenericCommand):
     _example_ = "{:s} $sp 7"
 
     def __init__(self):
+        """
+        Initialize a new thread.
+
+        Args:
+            self: (todo): write your description
+        """
         super(ChangePermissionCommand, self).__init__(complete=gdb.COMPLETE_LOCATION)
         return
 
     def pre_load(self):
+        """
+        Dynamically load loads
+
+        Args:
+            self: (todo): write your description
+        """
         try:
             __import__("keystone")
         except ImportError:
@@ -4888,6 +6652,13 @@ class ChangePermissionCommand(GenericCommand):
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        Implementation : meth meth meth meth : ~thread <int >
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         if len(argv) not in (1, 2):
             err("Incorrect syntax")
             self.usage()
@@ -4934,6 +6705,15 @@ class ChangePermissionCommand(GenericCommand):
         return
 
     def get_stub_by_arch(self, addr, size, perm):
+        """
+        Get a list of an address.
+
+        Args:
+            self: (todo): write your description
+            addr: (str): write your description
+            size: (int): write your description
+            perm: (str): write your description
+        """
         code = current_arch.mprotect_asm(addr, size, perm)
         arch, mode = get_keystone_arch()
         raw_insns = keystone_assemble(code, arch, mode, raw=True)
@@ -4953,12 +6733,24 @@ class UnicornEmulateCommand(GenericCommand):
     _example_ = "{0:s} -f $pc -n 10 -o /tmp/my-gef-emulation.py".format(_cmdline_)
 
     def __init__(self):
+        """
+        Initialize the setting.
+
+        Args:
+            self: (todo): write your description
+        """
         super(UnicornEmulateCommand, self).__init__(complete=gdb.COMPLETE_LOCATION)
         self.add_setting("verbose", False, "Set unicorn-engine in verbose mode")
         self.add_setting("show_disassembly", False, "Show every instruction executed")
         return
 
     def help(self):
+        """
+        Return a help string.
+
+        Args:
+            self: (todo): write your description
+        """
         h = self._syntax_
         h += "\n\t-f LOCATION specifies the start address of the emulated run (default $pc).\n"
         h += "\t-t LOCATION specifies the end address of the emulated run.\n"
@@ -4971,6 +6763,12 @@ class UnicornEmulateCommand(GenericCommand):
         return
 
     def pre_load(self):
+        """
+        Dynamically load the load
+
+        Args:
+            self: (todo): write your description
+        """
         try:
             __import__("unicorn")
         except ImportError:
@@ -4986,6 +6784,13 @@ class UnicornEmulateCommand(GenericCommand):
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        Execute a command.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         start_insn = None
         end_insn = -1
         nb_insn = -1
@@ -5031,11 +6836,27 @@ class UnicornEmulateCommand(GenericCommand):
         return
 
     def get_unicorn_end_addr(self, start_addr, nb):
+        """
+        Get the address of the addr of the first addr.
+
+        Args:
+            self: (todo): write your description
+            start_addr: (str): write your description
+            nb: (todo): write your description
+        """
         dis = list(gef_disassemble(start_addr, nb+1, True))
         last_insn = dis[-1]
         return last_insn.address
 
     def run_unicorn(self, start_insn_addr, end_insn_addr, *args, **kwargs):
+        """
+        Run the unicode unicode code.
+
+        Args:
+            self: (todo): write your description
+            start_insn_addr: (int): write your description
+            end_insn_addr: (todo): write your description
+        """
         verbose = self.get_setting("verbose") or False
         to_script_only = kwargs.get("to_script_only", False)
         arch, mode = get_unicorn_arch(to_string=True)
@@ -5251,12 +7072,25 @@ class RemoteCommand(GenericCommand):
     _example_  = "\n{0:s} -p 6789 localhost:1234\n{0:s} -q localhost:4444 # when using qemu-user".format(_cmdline_)
 
     def __init__(self):
+        """
+        Initialize the command.
+
+        Args:
+            self: (todo): write your description
+        """
         super(RemoteCommand, self).__init__(prefix=False)
         self.handler_connected = False
         self.add_setting("clean_on_exit", False, "Clean the temporary data downloaded when the session exits.")
         return
 
     def do_invoke(self, argv):
+        """
+        Download gdb - download command.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         global __gef_remote__
 
         if __gef_remote__ is not None:
@@ -5409,6 +7243,12 @@ class RemoteCommand(GenericCommand):
 
 
     def refresh_shared_library_path(self):
+        """
+        Refresh library paths.
+
+        Args:
+            self: (todo): write your description
+        """
         dirs = [r for r, d, f in os.walk(self.get_setting("root"))]
         path = ":".join(dirs)
         gdb.execute("set solib-search-path {:s}".format(path,))
@@ -5416,6 +7256,12 @@ class RemoteCommand(GenericCommand):
 
 
     def help(self):
+        """
+        Return help string.
+
+        Args:
+            self: (todo): write your description
+        """
         h = self._syntax_
         h += "\n\t   TARGET (mandatory) specifies the host:port, serial port or tty to connect to.\n"
         h += "\t-U will update gdb `solib-search-path` attribute to include the files downloaded from server (default: False).\n"
@@ -5430,6 +7276,13 @@ class RemoteCommand(GenericCommand):
 
 
     def prepare_qemu_stub(self, target):
+        """
+        Prepare the qemu.
+
+        Args:
+            self: (todo): write your description
+            target: (todo): write your description
+        """
         global current_arch, current_elf, __gef_qemu_mode__
 
         reset_all_caches()
@@ -5476,17 +7329,37 @@ class NopCommand(GenericCommand):
     _example_ = "{:s} $pc".format(_cmdline_)
 
     def __init__(self):
+        """
+        Initialize a dop
+
+        Args:
+            self: (todo): write your description
+        """
         super(NopCommand, self).__init__(complete=gdb.COMPLETE_LOCATION)
         return
 
 
     def get_insn_size(self, addr):
+        """
+        Returns the size of a memory in - memory.
+
+        Args:
+            self: (todo): write your description
+            addr: (str): write your description
+        """
         cur_insn = gef_current_instruction(addr)
         next_insn = gef_instruction_n(addr, 2)
         return next_insn.address - cur_insn.address
 
 
     def do_invoke(self, argv):
+        """
+        Invoke the command.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         opts, args = getopt.getopt(argv, "b:h")
         num_bytes = 0
         for o, a in opts:
@@ -5506,6 +7379,12 @@ class NopCommand(GenericCommand):
 
 
     def help(self):
+        """
+        Return the help string.
+
+        Args:
+            self: (todo): write your description
+        """
         m = self._syntax_
         m += "\n  LOCATION\taddress/symbol to patch\n"
         m += "  -b NUM_BYTES\tInstead of writing one instruction, patch the specified number of bytes\n"
@@ -5515,6 +7394,14 @@ class NopCommand(GenericCommand):
 
     @only_if_gdb_running
     def nop_bytes(self, loc, num_bytes):
+        """
+        Get the nop bytes in - th bytes.
+
+        Args:
+            self: (todo): write your description
+            loc: (todo): write your description
+            num_bytes: (int): write your description
+        """
         if num_bytes == 0:
             size = self.get_insn_size(loc)
         else:
@@ -5552,11 +7439,24 @@ class StubCommand(GenericCommand):
     _example_ = "{:s} -r 0 fork"
 
     def __init__(self):
+        """
+        Initialize the gdb object.
+
+        Args:
+            self: (todo): write your description
+        """
         super(StubCommand, self).__init__(complete=gdb.COMPLETE_LOCATION)
         return
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        Execute the command - line interface.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         try:
             opts, args = getopt.getopt(argv, "r:")
             retval = 0
@@ -5582,6 +7482,12 @@ class CapstoneDisassembleCommand(GenericCommand):
     _example_ = "{:s} $pc length=50".format(_cmdline_)
 
     def pre_load(self):
+        """
+        Dynamically load loads
+
+        Args:
+            self: (todo): write your description
+        """
         try:
             __import__("capstone")
         except ImportError:
@@ -5590,11 +7496,24 @@ class CapstoneDisassembleCommand(GenericCommand):
         return
 
     def __init__(self):
+        """
+        Initialize gdb
+
+        Args:
+            self: (todo): write your description
+        """
         super(CapstoneDisassembleCommand, self).__init__(complete=gdb.COMPLETE_LOCATION)
         return
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        Implementation of gef <https : print >
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         location = None
 
         kwargs = {}
@@ -5627,6 +7546,14 @@ class CapstoneDisassembleCommand(GenericCommand):
         return
 
     def capstone_analyze_pc(self, insn, nb_insn):
+        """
+        Analyze the capabilities of the current instruction.
+
+        Args:
+            self: (todo): write your description
+            insn: (todo): write your description
+            nb_insn: (todo): write your description
+        """
         if current_arch.is_conditional_branch(insn):
             is_taken, reason = current_arch.is_branch_taken(insn)
             if is_taken:
@@ -5655,11 +7582,24 @@ class GlibcHeapCommand(GenericCommand):
     _syntax_  = "{:s} (chunk|chunks|bins|arenas)".format(_cmdline_)
 
     def __init__(self):
+        """
+        Initialize the glib library.
+
+        Args:
+            self: (todo): write your description
+        """
         super(GlibcHeapCommand, self).__init__(prefix=True)
         return
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        Invoke a command
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         self.usage()
         return
 
@@ -5673,11 +7613,24 @@ class GlibcHeapSetArenaCommand(GenericCommand):
     _example_ = "{:s} 0x001337001337".format(_cmdline_)
 
     def __init__(self):
+        """
+        Initialize glibc gdb.
+
+        Args:
+            self: (todo): write your description
+        """
         super(GlibcHeapSetArenaCommand, self).__init__(complete=gdb.COMPLETE_LOCATION)
         return
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        Execute the main function.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         global __gef_default_main_arena__
 
         if len(argv) < 1:
@@ -5709,6 +7662,13 @@ class GlibcHeapArenaCommand(GenericCommand):
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        Execute a gef request.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         try:
             arena = GlibcArena(__gef_default_main_arena__)
         except gdb.error:
@@ -5731,11 +7691,24 @@ class GlibcHeapChunkCommand(GenericCommand):
     _syntax_  = "{:s} LOCATION".format(_cmdline_)
 
     def __init__(self):
+        """
+        Initialize gdbccHe.
+
+        Args:
+            self: (todo): write your description
+        """
         super(GlibcHeapChunkCommand, self).__init__(complete=gdb.COMPLETE_LOCATION)
         return
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        Implements
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         if len(argv) < 1:
             err("Missing chunk address")
             self.usage()
@@ -5759,12 +7732,25 @@ class GlibcHeapChunksCommand(GenericCommand):
     _example_ = "\n{0}\n{0} 0x555555775000".format(_cmdline_)
 
     def __init__(self):
+        """
+        Initialize glib gdb.
+
+        Args:
+            self: (todo): write your description
+        """
         super(GlibcHeapChunksCommand, self).__init__(complete=gdb.COMPLETE_LOCATION)
         self.add_setting("peek_nb_byte", 16, "Hexdump N first byte(s) inside the chunk data (0 to disable)")
         return
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        ::
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
 
         if not argv:
             heap_section = [x for x in get_process_maps() if x.path == "[heap]"]
@@ -5825,11 +7811,24 @@ class GlibcHeapBinsCommand(GenericCommand):
     _syntax_ = "{:s} [{:s}]".format(_cmdline_, "|".join(_bin_types_))
 
     def __init__(self):
+        """
+        Initialize the gdb.
+
+        Args:
+            self: (todo): write your description
+        """
         super(GlibcHeapBinsCommand, self).__init__(prefix=True, complete=gdb.COMPLETE_LOCATION)
         return
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        Execute a command
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         if len(argv) == 0:
             for bin_t in GlibcHeapBinsCommand._bin_types_:
                 gdb.execute("heap bins {:s}".format(bin_t))
@@ -5845,6 +7844,14 @@ class GlibcHeapBinsCommand(GenericCommand):
 
     @staticmethod
     def pprint_bin(arena_addr, index, _type=""):
+        """
+        Pretty print chunks.
+
+        Args:
+            arena_addr: (str): write your description
+            index: (int): write your description
+            _type: (str): write your description
+        """
         arena = GlibcArena(arena_addr)
         fw, bk = arena.bin(index)
 
@@ -5878,12 +7885,31 @@ class GlibcHeapFastbinsYCommand(GenericCommand):
     _syntax_  = "{:s} [ARENA_ADDRESS]".format(_cmdline_)
 
     def __init__(self):
+        """
+        Initialize the gdb.
+
+        Args:
+            self: (todo): write your description
+        """
         super(GlibcHeapFastbinsYCommand, self).__init__(complete=gdb.COMPLETE_LOCATION)
         return
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        This function
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         def fastbin_index(sz):
+            """
+            Return the fastbin index.
+
+            Args:
+                sz: (int): write your description
+            """
             return (sz >> 4) - 2 if SIZE_SZ == 8 else (sz >> 3) - 2
 
         SIZE_SZ = current_arch.ptrsize
@@ -5938,11 +7964,24 @@ class GlibcHeapUnsortedBinsCommand(GenericCommand):
     _syntax_  = "{:s} [ARENA_ADDRESS]".format(_cmdline_)
 
     def __init__(self):
+        """
+        Initialize gdb.
+
+        Args:
+            self: (todo): write your description
+        """
         super(GlibcHeapUnsortedBinsCommand, self).__init__(complete=gdb.COMPLETE_LOCATION)
         return
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        Executes the specified address.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         if get_main_arena() is None:
             err("Invalid Glibc arena")
             return
@@ -5962,11 +8001,24 @@ class GlibcHeapSmallBinsCommand(GenericCommand):
     _syntax_  = "{:s} [ARENA_ADDRESS]".format(_cmdline_)
 
     def __init__(self):
+        """
+        Initialize the gdb.
+
+        Args:
+            self: (todo): write your description
+        """
         super(GlibcHeapSmallBinsCommand, self).__init__(complete=gdb.COMPLETE_LOCATION)
         return
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        Implements a statement.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         if get_main_arena() is None:
             err("Invalid Glibc arena")
             return
@@ -5991,11 +8043,24 @@ class GlibcHeapLargeBinsCommand(GenericCommand):
     _syntax_  = "{:s} [ARENA_ADDRESS]".format(_cmdline_)
 
     def __init__(self):
+        """
+        Initialize the gdb.
+
+        Args:
+            self: (todo): write your description
+        """
         super(GlibcHeapLargeBinsCommand, self).__init__(complete=gdb.COMPLETE_LOCATION)
         return
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        Implements the do_chunk
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         if get_main_arena() is None:
             err("Invalid Glibc arena")
             return
@@ -6022,6 +8087,13 @@ class SolveKernelSymbolCommand(GenericCommand):
     _example_ = "{:s} prepare_creds".format(_cmdline_)
 
     def do_invoke(self, argv):
+        """
+        Invoke the command
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         if len(argv) != 1:
             self.usage()
             return
@@ -6057,6 +8129,13 @@ class DetailRegistersCommand(GenericCommand):
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        Main function
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         regs = []
         regname_color = get_gef_setting("theme.registers_register_name")
         changed_register_value_color = get_gef_setting("theme.registers_value_changed")
@@ -6134,10 +8213,23 @@ class ShellcodeCommand(GenericCommand):
     _syntax_  = "{:s} <search|get>".format(_cmdline_)
 
     def __init__(self):
+        """
+        Initialize the command
+
+        Args:
+            self: (todo): write your description
+        """
         super(ShellcodeCommand, self).__init__(prefix=True)
         return
 
     def do_invoke(self, argv):
+        """
+        Execute the command
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         err("Missing sub-command <search|get>")
         self.usage()
         return
@@ -6156,6 +8248,13 @@ class ShellcodeSearchCommand(GenericCommand):
 
 
     def do_invoke(self, argv):
+        """
+        Execute a command
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         if not argv:
             err("Missing pattern to search")
             self.usage()
@@ -6166,6 +8265,13 @@ class ShellcodeSearchCommand(GenericCommand):
 
 
     def search_shellcode(self, search_options):
+        """
+        Search for the searchcode
+
+        Args:
+            self: (todo): write your description
+            search_options: (str): write your description
+        """
         # API : http://shell-storm.org/shellcode/
         args = "*".join(search_options)
 
@@ -6205,6 +8311,13 @@ class ShellcodeGetCommand(GenericCommand):
     get_url = "{}/shellcode/files/shellcode-{{:d}}.php".format(api_base)
 
     def do_invoke(self, argv):
+        """
+        Execute a command
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         if len(argv) != 1:
             err("Missing ID to download")
             self.usage()
@@ -6219,6 +8332,13 @@ class ShellcodeGetCommand(GenericCommand):
         return
 
     def get_shellcode(self, sid):
+        """
+        Return the shellcode.
+
+        Args:
+            self: (todo): write your description
+            sid: (int): write your description
+        """
         res = http_get(self.get_url.format(sid))
         if res is None:
             err("Failed to fetch shellcode #{:d}".format(sid))
@@ -6245,10 +8365,22 @@ class RopperCommand(GenericCommand):
     _syntax_  = "{:s} [ROPPER_OPTIONS]".format(_cmdline_)
 
     def __init__(self):
+        """
+        Initialize a command
+
+        Args:
+            self: (todo): write your description
+        """
         super(RopperCommand, self).__init__(complete=gdb.COMPLETE_NONE)
         return
 
     def pre_load(self):
+        """
+        Dynamically load loads
+
+        Args:
+            self: (todo): write your description
+        """
         try:
             __import__("ropper")
         except ImportError:
@@ -6259,6 +8391,13 @@ class RopperCommand(GenericCommand):
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        ::
+
+        Args:
+            self: (todo): write your description
+            argv: (str): write your description
+        """
         ropper = sys.modules["ropper"]
         if "--file" not in argv:
             path = get_filepath()
@@ -6288,6 +8427,12 @@ class AssembleCommand(GenericCommand):
     _example_ = "\n{0:s} -a x86 -m 32 nop ; nop ; inc eax ; int3\n{0:s} -a arm -m arm add r0, r0, 1".format(_cmdline_)
 
     def __init__(self, *args, **kwargs):
+        """
+        Initialize the interface
+
+        Args:
+            self: (todo): write your description
+        """
         super(AssembleCommand, self).__init__(complete=gdb.COMPLETE_LOCATION)
         self.valid_arch_modes = {
             "ARM" : ["ARM", "THUMB"],
@@ -6301,6 +8446,12 @@ class AssembleCommand(GenericCommand):
         return
 
     def pre_load(self):
+        """
+        Dynamically load loads
+
+        Args:
+            self: (todo): write your description
+        """
         try:
             __import__("keystone")
         except ImportError:
@@ -6309,6 +8460,12 @@ class AssembleCommand(GenericCommand):
         return
 
     def usage(self):
+        """
+        Print the usage information.
+
+        Args:
+            self: (todo): write your description
+        """
         super(AssembleCommand, self).usage()
         gef_print("\nAvailable architectures/modes:")
         # for updates, see https://github.com/keystone-engine/keystone/blob/master/include/keystone/keystone.h
@@ -6318,6 +8475,13 @@ class AssembleCommand(GenericCommand):
         return
 
     def do_invoke(self, argv):
+        """
+        Implements the cli
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         arch_s, mode_s, big_endian, as_shellcode, write_to_location = None, None, False, False, None
         opts, args = getopt.getopt(argv, "a:m:l:esh")
         for o,a in opts:
@@ -6403,11 +8567,24 @@ class ProcessListingCommand(GenericCommand):
     _example_ = "{:s} gdb".format(_cmdline_)
 
     def __init__(self):
+        """
+        Initialize the command.
+
+        Args:
+            self: (todo): write your description
+        """
         super(ProcessListingCommand, self).__init__(complete=gdb.COMPLETE_LOCATION)
         self.add_setting("ps_command", "/bin/ps auxww", "`ps` command to get process information")
         return
 
     def do_invoke(self, argv):
+        """
+        Start a command
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         do_attach = False
         smart_scan = False
 
@@ -6443,6 +8620,12 @@ class ProcessListingCommand(GenericCommand):
 
 
     def get_processes(self):
+        """
+        Return a generator of external processes
+
+        Args:
+            self: (todo): write your description
+        """
         output = gef_execute_external(self.get_setting("ps_command").split(), True)
         names = [x.lower().replace("%", "") for x in output[0].split()]
 
@@ -6471,11 +8654,24 @@ class ElfInfoCommand(GenericCommand):
     _example_  = "{:s} /bin/ls".format(_cmdline_)
 
     def __init__(self, *args, **kwargs):
+        """
+        Initialize a gdb instance.
+
+        Args:
+            self: (todo): write your description
+        """
         super(ElfInfoCommand, self).__init__(complete=gdb.COMPLETE_LOCATION)
         return
 
 
     def do_invoke(self, argv):
+        """
+        Invoke the command.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         # http://www.sco.com/developers/gabi/latest/ch4.eheader.html
         classes = {0x01: "32-bit",
                    0x02: "64-bit",}
@@ -6554,11 +8750,24 @@ class EntryPointBreakCommand(GenericCommand):
     _aliases_ = ["start",]
 
     def __init__(self, *args, **kwargs):
+        """
+        Initialize the application.
+
+        Args:
+            self: (todo): write your description
+        """
         super(EntryPointBreakCommand, self).__init__()
         self.add_setting("entrypoint_symbols", "main _main __libc_start_main __uClibc_main start _start", "Possible symbols for entry points")
         return
 
     def do_invoke(self, argv):
+        """
+        Invoke the command.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         fpath = get_filepath()
         if fpath is None:
             warn("No executable to debug, use `file` to load a binary")
@@ -6609,11 +8818,26 @@ class EntryPointBreakCommand(GenericCommand):
         return
 
     def set_init_tbreak(self, addr):
+        """
+        Sets the breakpoint.
+
+        Args:
+            self: (todo): write your description
+            addr: (todo): write your description
+        """
         info("Breaking at entry-point: {:#x}".format(addr))
         bp = EntryBreakBreakpoint("*{:#x}".format(addr))
         return bp
 
     def set_init_tbreak_pie(self, addr, argv):
+        """
+        This function to set - break_tbreak button.
+
+        Args:
+            self: (todo): write your description
+            addr: (todo): write your description
+            argv: (list): write your description
+        """
         warn("PIC binary detected, retrieving text base address")
         gdb.execute("set stop-on-solib-events 1")
         disable_context()
@@ -6625,6 +8849,13 @@ class EntryPointBreakCommand(GenericCommand):
         return self.set_init_tbreak(base_address + addr)
 
     def is_pie(self, fpath):
+        """
+        Return true if the file fpath
+
+        Args:
+            self: (todo): write your description
+            fpath: (str): write your description
+        """
         return checksec(fpath)["PIE"]
 
 
@@ -6642,6 +8873,12 @@ class ContextCommand(GenericCommand):
     old_registers = {}
 
     def __init__(self):
+        """
+        Initialize context
+
+        Args:
+            self: (todo): write your description
+        """
         super(ContextCommand, self).__init__()
         self.add_setting("enable", True, "Enable/disable printing the context when breaking")
         self.add_setting("show_stack_raw", False, "Show the stack pane as raw hexdump (no dereference)")
@@ -6677,11 +8914,23 @@ class ContextCommand(GenericCommand):
         return
 
     def post_load(self):
+        """
+        Perform post - load hooks.
+
+        Args:
+            self: (todo): write your description
+        """
         gef_on_continue_hook(self.update_registers)
         gef_on_continue_hook(self.empty_extra_messages)
         return
 
     def show_legend(self):
+        """
+        Displays the legend
+
+        Args:
+            self: (todo): write your description
+        """
         if get_gef_setting("gef.disable_color")!=True:
             str_color = get_gef_setting("theme.dereference_string")
             code_addr_color = get_gef_setting("theme.address_code")
@@ -6698,6 +8947,13 @@ class ContextCommand(GenericCommand):
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        Invoke the command
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         if not self.get_setting("enable"):
             return
 
@@ -6735,6 +8991,13 @@ class ContextCommand(GenericCommand):
         return
 
     def context_title(self, m):
+        """
+        Prints a title
+
+        Args:
+            self: (todo): write your description
+            m: (todo): write your description
+        """
         line_color= get_gef_setting("theme.context_title_line")
         msg_color = get_gef_setting("theme.context_title_message")
 
@@ -6757,6 +9020,12 @@ class ContextCommand(GenericCommand):
         return
 
     def context_regs(self):
+        """
+        Display all registers
+
+        Args:
+            self: (todo): write your description
+        """
         self.context_title("registers")
         ignored_registers = set(self.get_setting("ignore_registers").split())
 
@@ -6820,6 +9089,12 @@ class ContextCommand(GenericCommand):
         return
 
     def context_stack(self):
+        """
+        Display the current context
+
+        Args:
+            self: (todo): write your description
+        """
         self.context_title("stack")
 
         show_raw = self.get_setting("show_stack_raw")
@@ -6839,6 +9114,12 @@ class ContextCommand(GenericCommand):
         return
 
     def context_code(self):
+        """
+        Display the current instruction.
+
+        Args:
+            self: (todo): write your description
+        """
         nb_insn = self.get_setting("nb_lines_code")
         nb_insn_prev = self.get_setting("nb_lines_code_prev")
         use_capstone = self.has_setting("use_capstone") and self.get_setting("use_capstone")
@@ -6906,6 +9187,12 @@ class ContextCommand(GenericCommand):
         return
 
     def context_args(self):
+        """
+        Return context arguments for the current context.
+
+        Args:
+            self: (todo): write your description
+        """
         insn = gef_current_instruction(current_arch.pc)
         if not current_arch.is_call(insn):
             return
@@ -6983,6 +9270,11 @@ class ContextCommand(GenericCommand):
         """When no symbol, read the current basic block and look for "interesting" instructions."""
 
         def __get_current_block_start_address():
+            """
+            Get the next block address.
+
+            Args:
+            """
             pc = current_arch.pc
             try:
                 block_start = gdb.block_for_pc(pc).start
@@ -7044,6 +9336,12 @@ class ContextCommand(GenericCommand):
 
 
     def context_source(self):
+        """
+        Display current context
+
+        Args:
+            self: (todo): write your description
+        """
         try:
             pc = current_arch.pc
             symtabline = gdb.find_pc_line(pc)
@@ -7085,6 +9383,14 @@ class ContextCommand(GenericCommand):
         return
 
     def get_pc_context_info(self, pc, line):
+        """
+        Get the basic information about the given block.
+
+        Args:
+            self: (todo): write your description
+            pc: (str): write your description
+            line: (str): write your description
+        """
         try:
             current_block = gdb.block_for_pc(pc)
             if not current_block.is_valid(): return ""
@@ -7118,6 +9424,12 @@ class ContextCommand(GenericCommand):
         return ""
 
     def context_trace(self):
+        """
+        Trace trace.
+
+        Args:
+            self: (todo): write your description
+        """
         self.context_title("trace")
 
         nb_backtrace = self.get_setting("nb_lines_backtrace")
@@ -7164,7 +9476,18 @@ class ContextCommand(GenericCommand):
         return
 
     def context_threads(self):
+        """
+        Display context threads
+
+        Args:
+            self: (todo): write your description
+        """
         def reason():
+            """
+            Return a string with the first reason
+
+            Args:
+            """
             res = gdb.execute("info program", to_string=True).splitlines()
             if not res:
                 return "NOT RUNNING"
@@ -7215,6 +9538,12 @@ class ContextCommand(GenericCommand):
 
 
     def context_additional_information(self):
+        """
+        Adds context information to the context.
+
+        Args:
+            self: (todo): write your description
+        """
         if not __context_messages__:
             return
 
@@ -7227,6 +9556,12 @@ class ContextCommand(GenericCommand):
         return
 
     def context_memory(self):
+        """
+        Set memory memory context.
+
+        Args:
+            self: (todo): write your description
+        """
         global __watches__
         for address, opt in sorted(__watches__.items()):
             self.context_title("memory:{:#x}".format(address))
@@ -7238,6 +9573,13 @@ class ContextCommand(GenericCommand):
 
     @classmethod
     def update_registers(cls, event):
+        """
+        Update all registers.
+
+        Args:
+            cls: (todo): write your description
+            event: (str): write your description
+        """
         for reg in current_arch.all_registers:
             try:
                 cls.old_registers[reg] = get_register(reg)
@@ -7247,6 +9589,13 @@ class ContextCommand(GenericCommand):
 
 
     def empty_extra_messages(self, event):
+        """
+        Set extra extra extra context variables.
+
+        Args:
+            self: (todo): write your description
+            event: (todo): write your description
+        """
         global __context_messages__
         __context_messages__ = []
         return
@@ -7259,11 +9608,24 @@ class MemoryCommand(GenericCommand):
     _syntax_  = "{:s}".format(_cmdline_)
 
     def __init__(self):
+        """
+        Initialize the command.
+
+        Args:
+            self: (todo): write your description
+        """
         super(MemoryCommand, self).__init__(prefix=True)
         return
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        Invoke a command
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         self.usage()
         return
 
@@ -7276,6 +9638,13 @@ class MemoryWatchCommand(GenericCommand):
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        Invoke a python interpreter
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         global __watches__
 
         if len(argv) not in (1, 2, 3):
@@ -7311,6 +9680,13 @@ class MemoryUnwatchCommand(GenericCommand):
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        Execute a command
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         global __watches__
         if len(argv) < 1:
             self.usage()
@@ -7332,6 +9708,13 @@ class MemoryWatchResetCommand(GenericCommand):
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        Decorator to run a method.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         global __watches__
         __watches__.clear()
         ok("Memory watches cleared")
@@ -7345,6 +9728,13 @@ class MemoryWatchListCommand(GenericCommand):
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        Invoke the command
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         global __watches__
 
         if not __watches__:
@@ -7366,11 +9756,24 @@ class HexdumpCommand(GenericCommand):
     _example_ = "{:s} byte $rsp L16 DOWN".format(_cmdline_)
 
     def __init__(self):
+        """
+        !
+
+        Args:
+            self: (todo): write your description
+        """
         super(HexdumpCommand, self).__init__(complete=gdb.COMPLETE_LOCATION)
         return
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        :: usage :
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         argc = len(argv)
         if argc < 2:
             self.usage()
@@ -7418,6 +9821,15 @@ class HexdumpCommand(GenericCommand):
 
 
     def _hexdump(self, start_addr, length, arrange_as):
+        """
+        Generate hex string.
+
+        Args:
+            self: (todo): write your description
+            start_addr: (todo): write your description
+            length: (int): write your description
+            arrange_as: (todo): write your description
+        """
         elf = get_elf_headers()
         if elf is None:
             return
@@ -7462,11 +9874,24 @@ class PatchCommand(GenericCommand):
     }
 
     def __init__(self):
+        """
+        Initialize the daemon.
+
+        Args:
+            self: (todo): write your description
+        """
         super(PatchCommand, self).__init__(complete=gdb.COMPLETE_LOCATION, prefix=True)
         return
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        [ ~thread ]
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         argc = len(argv)
         if argc < 3:
             self.usage()
@@ -7499,6 +9924,13 @@ class PatchStringCommand(GenericCommand):
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        [ ~thread
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         argc = len(argv)
         if argc != 2:
             self.usage()
@@ -7528,12 +9960,25 @@ class DereferenceCommand(GenericCommand):
     _example_ = "{:s} $sp l20".format(_cmdline_)
 
     def __init__(self):
+        """
+        Initialize the dereference.
+
+        Args:
+            self: (todo): write your description
+        """
         super(DereferenceCommand, self).__init__(complete=gdb.COMPLETE_LOCATION)
         self.add_setting("max_recursion", 7, "Maximum level of pointer recursion")
         return
 
     @staticmethod
     def pprint_dereferenced(addr, off):
+        """
+        Format the geferenced memory.
+
+        Args:
+            addr: (str): write your description
+            off: (int): write your description
+        """
         base_address_color = get_gef_setting("theme.dereference_base_address")
         registers_color = get_gef_setting("theme.dereference_register_value")
 
@@ -7567,6 +10012,13 @@ class DereferenceCommand(GenericCommand):
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        The main function
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         argc = len(argv)
 
         if argc < 1:
@@ -7608,6 +10060,12 @@ class DereferenceCommand(GenericCommand):
 
     @staticmethod
     def dereference_from(addr):
+        """
+        Return a list of dereference address.
+
+        Args:
+            addr: (todo): write your description
+        """
         if not is_alive():
             return [format_address(addr),]
 
@@ -7678,6 +10136,13 @@ class ASLRCommand(GenericCommand):
     _syntax_  = "{:s} (on|off)".format(_cmdline_)
 
     def do_invoke(self, argv):
+        """
+        Execute command.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         argc = len(argv)
 
         if argc == 0:
@@ -7720,6 +10185,13 @@ class ResetCacheCommand(GenericCommand):
     _syntax_  = _cmdline_
 
     def do_invoke(self, argv):
+        """
+        Execute the command.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         reset_all_caches()
         return
 
@@ -7735,6 +10207,13 @@ class VMMapCommand(GenericCommand):
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        The main function.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         vmmap = get_process_maps()
         if not vmmap:
             err("No address mapping information found")
@@ -7778,6 +10257,13 @@ class XFilesCommand(GenericCommand):
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        Main function.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         color = get_gef_setting("theme.xinfo_title_message")
         headers = [Color.colorify(x, attrs=color) for x in ["Start", "End", "Name", "File",]]
         if is_elf64():
@@ -7813,11 +10299,24 @@ class XAddressInfoCommand(GenericCommand):
     _example_ = "{:s} $pc".format(_cmdline_)
 
     def __init__(self):
+        """
+        Initialize the application
+
+        Args:
+            self: (todo): write your description
+        """
         super(XAddressInfoCommand, self).__init__(complete=gdb.COMPLETE_LOCATION)
         return
 
     @only_if_gdb_running
     def do_invoke (self, argv):
+        """
+        Executes the gdb command.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         if not argv:
             err ("At least one valid address must be specified")
             self.usage()
@@ -7834,6 +10333,13 @@ class XAddressInfoCommand(GenericCommand):
         return
 
     def infos(self, address):
+        """
+        Get infos information.
+
+        Args:
+            self: (todo): write your description
+            address: (str): write your description
+        """
         addr = lookup_address(address)
         if not addr.valid:
             warn("Cannot reach {:#x} in memory space".format(address))
@@ -7877,10 +10383,23 @@ class XorMemoryCommand(GenericCommand):
     _syntax_  = "{:s} <display|patch> ADDRESS SIZE KEY".format(_cmdline_)
 
     def __init__(self):
+        """
+        Initialize the application
+
+        Args:
+            self: (todo): write your description
+        """
         super(XorMemoryCommand, self).__init__(prefix=True)
         return
 
     def do_invoke(self, argv):
+        """
+        Invoke a command
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         self.usage()
         return
 
@@ -7895,6 +10414,13 @@ class XorMemoryDisplayCommand(GenericCommand):
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        :: usage : script.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         if len(argv) != 3:
             self.usage()
             return
@@ -7923,6 +10449,13 @@ class XorMemoryPatchCommand(GenericCommand):
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        :: usage command
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         if len(argv) != 3:
             self.usage()
             return
@@ -7948,6 +10481,12 @@ class TraceRunCommand(GenericCommand):
     _example_ = "{:s} 0x555555554610".format(_cmdline_)
 
     def __init__(self):
+        """
+        Initialize the command line interface.
+
+        Args:
+            self: (todo): write your description
+        """
         super(TraceRunCommand, self).__init__(self._cmdline_, complete=gdb.COMPLETE_LOCATION)
         self.add_setting("max_tracing_recursion", 1, "Maximum depth of tracing")
         self.add_setting("tracefile_prefix", "./gef-trace-", "Specify the tracing output file prefix")
@@ -7955,6 +10494,13 @@ class TraceRunCommand(GenericCommand):
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        Execute a command
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         if len(argv) not in (1, 2):
             self.usage()
             return
@@ -7976,6 +10522,12 @@ class TraceRunCommand(GenericCommand):
 
 
     def get_frames_size(self):
+        """
+        Return the number of frames in the file
+
+        Args:
+            self: (todo): write your description
+        """
         n = 0
         f = gdb.newest_frame()
         while f:
@@ -7985,6 +10537,15 @@ class TraceRunCommand(GenericCommand):
 
 
     def trace(self, loc_start, loc_end, depth):
+        """
+        Starts tracing.
+
+        Args:
+            self: (todo): write your description
+            loc_start: (todo): write your description
+            loc_end: (todo): write your description
+            depth: (int): write your description
+        """
         info("Tracing from {:#x} to {:#x} (max depth={:d})".format(loc_start, loc_end,depth))
         logfile = "{:s}{:#x}-{:#x}.txt".format(self.get_setting("tracefile_prefix"), loc_start, loc_end)
         enable_redirect_output(to_file=logfile)
@@ -7998,6 +10559,15 @@ class TraceRunCommand(GenericCommand):
 
 
     def start_tracing(self, loc_start, loc_end, depth):
+        """
+        Start tracing start and end times
+
+        Args:
+            self: (todo): write your description
+            loc_start: (todo): write your description
+            loc_end: (todo): write your description
+            depth: (int): write your description
+        """
         loc_cur = loc_start
         frame_count_init = self.get_frames_size()
 
@@ -8041,11 +10611,24 @@ class PatternCommand(GenericCommand):
     _syntax_  = "{:s} (create|search) <args>".format(_cmdline_)
 
     def __init__(self, *args, **kwargs):
+        """
+        Initialize a setting.
+
+        Args:
+            self: (todo): write your description
+        """
         super(PatternCommand, self).__init__(prefix=True)
         self.add_setting("length", 1024, "Initial length of a cyclic buffer to generate")
         return
 
     def do_invoke(self, argv):
+        """
+        Invoke a command
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         self.usage()
         return
 
@@ -8060,6 +10643,13 @@ class PatternCreateCommand(GenericCommand):
     _syntax_  = "{:s} [SIZE]".format(_cmdline_)
 
     def do_invoke(self, argv):
+        """
+        Execute a geojson - h for the specified parameter
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         if len(argv) == 1:
             if not argv[0].isdigit():
                 err("Invalid size")
@@ -8088,6 +10678,13 @@ class PatternSearchCommand(GenericCommand):
 
     @only_if_gdb_running
     def do_invoke(self, argv):
+        """
+        Invoke a command.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         argc = len(argv)
         if argc not in (1, 2):
             self.usage()
@@ -8107,6 +10704,14 @@ class PatternSearchCommand(GenericCommand):
         return
 
     def search(self, pattern, size):
+        """
+        Search for a pattern.
+
+        Args:
+            self: (todo): write your description
+            pattern: (str): write your description
+            size: (int): write your description
+        """
         pattern_be, pattern_le = None, None
 
         # 1. check if it's a symbol (like '$sp' or '0x1337')
@@ -8163,14 +10768,33 @@ class ChecksecCommand(GenericCommand):
     _example_ = "{} /bin/ls".format(_cmdline_)
 
     def __init__(self):
+        """
+        Initialize the command
+
+        Args:
+            self: (todo): write your description
+        """
         super(ChecksecCommand, self).__init__(complete=gdb.COMPLETE_FILENAME)
         return
 
     def pre_load(self):
+        """
+        Pre - load of the load.
+
+        Args:
+            self: (todo): write your description
+        """
         which("readelf")
         return
 
     def do_invoke(self, argv):
+        """
+        Implements
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         argc = len(argv)
 
         if argc == 0:
@@ -8192,6 +10816,13 @@ class ChecksecCommand(GenericCommand):
         return
 
     def print_security_properties(self, filename):
+        """
+        Print security properties.
+
+        Args:
+            self: (todo): write your description
+            filename: (str): write your description
+        """
         sec = checksec(filename)
         for prop in sec:
             if prop in ("Partial RelRO", "Full RelRO"): continue
@@ -8223,6 +10854,13 @@ class FormatStringSearchCommand(GenericCommand):
     _aliases_ = ["fmtstr-helper",]
 
     def do_invoke(self, argv):
+        """
+        Execute the function.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         dangerous_functions = {
             "printf": 0,
             "sprintf": 1,
@@ -8255,6 +10893,12 @@ class HeapAnalysisCommand(GenericCommand):
     _syntax_ = _cmdline_
 
     def __init__(self, *args, **kwargs):
+        """
+        Initialize a setting
+
+        Args:
+            self: (todo): write your description
+        """
         super(HeapAnalysisCommand, self).__init__(complete=gdb.COMPLETE_NONE)
         self.add_setting("check_free_null", False, "Break execution when a free(NULL) is encountered")
         self.add_setting("check_double_free", True, "Break execution when a double free is encountered")
@@ -8268,6 +10912,13 @@ class HeapAnalysisCommand(GenericCommand):
     @only_if_gdb_running
     @experimental_feature
     def do_invoke(self, argv):
+        """
+        Invoke the given command.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         if not argv:
             self.setup()
             return
@@ -8277,6 +10928,12 @@ class HeapAnalysisCommand(GenericCommand):
         return
 
     def setup(self):
+        """
+        Setup breakpoint
+
+        Args:
+            self: (todo): write your description
+        """
         ok("Tracking malloc() & calloc()")
         self.bp_malloc = TraceMallocBreakpoint("__libc_malloc")
         self.bp_calloc = TraceMallocBreakpoint("__libc_calloc")
@@ -8296,6 +10953,12 @@ class HeapAnalysisCommand(GenericCommand):
         return
 
     def dump_tracked_allocations(self):
+        """
+        Dump all the list.
+
+        Args:
+            self: (todo): write your description
+        """
         global __heap_allocated_list__, __heap_freed_list__, __heap_uaf_watchpoints__
 
         if __heap_allocated_list__:
@@ -8312,6 +10975,13 @@ class HeapAnalysisCommand(GenericCommand):
         return
 
     def clean(self, event):
+        """
+        Cleans up the heap is deleted.
+
+        Args:
+            self: (todo): write your description
+            event: (todo): write your description
+        """
         global __heap_allocated_list__, __heap_freed_list__, __heap_uaf_watchpoints__
 
         ok("{} - Cleaning up".format(Color.colorify("Heap-Analysis", attrs="yellow bold"),))
@@ -8342,12 +11012,27 @@ class IsSyscallCommand(GenericCommand):
     _syntax_ = _cmdline_
 
     def do_invoke(self, argv):
+        """
+        Executes the current command.
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         insn = gef_current_instruction(current_arch.pc)
         ok('Current instruction is{}a syscall'.format(' ' if self.is_syscall(current_arch, insn) else ' not '))
 
         return
 
     def is_syscall(self, arch, instruction):
+        """
+        Determine if instruction is a instruction.
+
+        Args:
+            self: (todo): write your description
+            arch: (array): write your description
+            instruction: (str): write your description
+        """
         insn_str = instruction.mnemonic  + ' ' + ', '.join(instruction.operands)
         return insn_str.strip() in arch.syscall_instructions
 
@@ -8359,12 +11044,25 @@ class SyscallArgsCommand(GenericCommand):
     _syntax_ = _cmdline_
 
     def __init__(self):
+        """
+        Initialize the setting.
+
+        Args:
+            self: (todo): write your description
+        """
         super(SyscallArgsCommand, self).__init__()
         self.add_setting("path", os.path.join(GEF_TEMP_DIR, "syscall-tables"),
                          "Path to store/load the syscall tables files")
         return
 
     def do_invoke(self, argv):
+        """
+        Implementation of the geojson - gef
+
+        Args:
+            self: (todo): write your description
+            argv: (list): write your description
+        """
         color = get_gef_setting("theme.xinfo_title_message")
 
         path = self.get_settings_path()
@@ -8410,19 +11108,46 @@ class SyscallArgsCommand(GenericCommand):
         return
 
     def get_filepath(self, x):
+        """
+        Returns the absolute path of the file.
+
+        Args:
+            self: (todo): write your description
+            x: (str): write your description
+        """
         p = self.get_settings_path()
         if not p: return None
         return os.path.join(p, "{}.py".format(x))
 
     def get_module(self, modname):
+        """
+        Returns the module.
+
+        Args:
+            self: (todo): write your description
+            modname: (str): write your description
+        """
         _fullname = self.get_filepath(modname)
         return imp.load_source(modname, _fullname)
 
     def get_syscall_table(self, modname):
+        """
+        Returns the sys.
+
+        Args:
+            self: (todo): write your description
+            modname: (str): write your description
+        """
         _mod = self.get_module(modname)
         return getattr(_mod, 'syscall_table')
 
     def get_settings_path(self):
+        """
+        Returns the absolute path of the settings file.
+
+        Args:
+            self: (todo): write your description
+        """
         path = os.path.expanduser(self.get_setting("path"))
         path = os.path.realpath(path)
         return path if os.path.isdir(path) else None
@@ -8435,6 +11160,12 @@ class GefCommand(gdb.Command):
     _syntax_  = "{:s} (missing|config|save|restore|set|run)".format(_cmdline_)
 
     def __init__(self):
+        """
+        Init gdb interface.
+
+        Args:
+            self: (todo): write your description
+        """
         super(GefCommand, self).__init__(GefCommand._cmdline_,
                                          gdb.COMMAND_SUPPORT,
                                          gdb.COMPLETE_NONE,
@@ -8450,6 +11181,12 @@ class GefCommand(gdb.Command):
         return
 
     def setup(self):
+        """
+        Initializes the gef engine
+
+        Args:
+            self: (todo): write your description
+        """
         self.load(initial=True)
         # loading GEF sub-commands
         self.doc = GefHelpCommand(self.loaded_commands)
@@ -8476,6 +11213,12 @@ class GefCommand(gdb.Command):
 
 
     def __reload_auto_breakpoints(self):
+        """
+        Reloads all breakpoints
+
+        Args:
+            self: (todo): write your description
+        """
         bkp_fname = __config__.get("gef.autosave_breakpoints_file", None)
         bkp_fname = bkp_fname[0] if bkp_fname else None
         if bkp_fname:
@@ -8494,6 +11237,12 @@ class GefCommand(gdb.Command):
 
 
     def __load_extra_plugins(self):
+        """
+        Load the list of the installed in the directory
+
+        Args:
+            self: (todo): write your description
+        """
         nb_added = -1
         try:
             nb_inital = len(self.loaded_commands)
@@ -8519,10 +11268,23 @@ class GefCommand(gdb.Command):
 
     @property
     def loaded_command_names(self):
+        """
+        Return a list of all command names.
+
+        Args:
+            self: (todo): write your description
+        """
         return [x[0] for x in self.loaded_commands]
 
 
     def invoke(self, args, from_tty):
+        """
+        Invoke the command.
+
+        Args:
+            self: (todo): write your description
+            from_tty: (todo): write your description
+        """
         self.dont_repeat()
         gdb.execute("gef help")
         return
@@ -8534,6 +11296,12 @@ class GefCommand(gdb.Command):
         self.commands = [(x._cmdline_, x) for x in __commands__]
 
         def is_loaded(x):
+            """
+            Return true if any of any of the given.
+
+            Args:
+                x: (str): write your description
+            """
             return any(filter(lambda u: x == u[0], self.loaded_commands))
 
         for cmd, class_name in self.commands:
@@ -8578,6 +11346,13 @@ class GefHelpCommand(gdb.Command):
     _syntax_  = _cmdline_
 
     def __init__(self, commands, *args, **kwargs):
+        """
+        Initialize a new command.
+
+        Args:
+            self: (todo): write your description
+            commands: (todo): write your description
+        """
         super(GefHelpCommand, self).__init__(GefHelpCommand._cmdline_,
                                              gdb.COMMAND_SUPPORT,
                                              gdb.COMPLETE_NONE,
@@ -8588,6 +11363,13 @@ class GefHelpCommand(gdb.Command):
         return
 
     def invoke(self, args, from_tty):
+        """
+        Invoke the command.
+
+        Args:
+            self: (todo): write your description
+            from_tty: (todo): write your description
+        """
         self.dont_repeat()
         gef_print(titlify("GEF - GDB Enhanced Features"))
         gef_print(self.__doc__)
@@ -8630,11 +11412,25 @@ class GefConfigCommand(gdb.Command):
     _syntax_  = "{:s} [setting_name] [setting_value]".format(_cmdline_)
 
     def __init__(self, loaded_commands, *args, **kwargs):
+        """
+        Initialize the gdb command.
+
+        Args:
+            self: (todo): write your description
+            loaded_commands: (str): write your description
+        """
         super(GefConfigCommand, self).__init__(GefConfigCommand._cmdline_, gdb.COMMAND_NONE, prefix=False)
         self.loaded_commands = loaded_commands
         return
 
     def invoke(self, args, from_tty):
+        """
+        Invoke the command.
+
+        Args:
+            self: (todo): write your description
+            from_tty: (todo): write your description
+        """
         self.dont_repeat()
         argv = gdb.string_to_argv(args)
         argc = len(argv)
@@ -8664,6 +11460,14 @@ class GefConfigCommand(gdb.Command):
         return
 
     def print_setting(self, plugin_name, show_description=False):
+        """
+        Print the configuration.
+
+        Args:
+            self: (todo): write your description
+            plugin_name: (str): write your description
+            show_description: (bool): write your description
+        """
         res = __config__.get(plugin_name)
         string_color = __config__.get("theme.dereference_string")[0]
 
@@ -8683,11 +11487,25 @@ class GefConfigCommand(gdb.Command):
         return
 
     def print_settings(self):
+        """
+        Print the settings.
+
+        Args:
+            self: (todo): write your description
+        """
         for x in sorted(__config__):
             self.print_setting(x)
         return
 
     def set_setting(self, argc, argv):
+        """
+        Configure the global configuration.
+
+        Args:
+            self: (todo): write your description
+            argc: (todo): write your description
+            argv: (list): write your description
+        """
         global __gef__
         if "." not in argv[0]:
             err("Invalid command format")
@@ -8718,6 +11536,14 @@ class GefConfigCommand(gdb.Command):
         return
 
     def complete(self, text, word):
+        """
+        Return a list.
+
+        Args:
+            self: (todo): write your description
+            text: (str): write your description
+            word: (str): write your description
+        """
         settings = sorted(__config__)
 
         if text=="":
@@ -8739,11 +11565,24 @@ class GefSaveCommand(gdb.Command):
     _syntax_  = _cmdline_
 
     def __init__(self, *args, **kwargs):
+        """
+        Initialize gef gdb.
+
+        Args:
+            self: (todo): write your description
+        """
         super(GefSaveCommand, self).__init__(GefSaveCommand._cmdline_, gdb.COMMAND_SUPPORT,
                                              gdb.COMPLETE_NONE, False)
         return
 
     def invoke(self, args, from_tty):
+        """
+        Invoke the command.
+
+        Args:
+            self: (todo): write your description
+            from_tty: (todo): write your description
+        """
         self.dont_repeat()
         cfg = configparser.RawConfigParser()
         old_sect = None
@@ -8779,6 +11618,12 @@ class GefRestoreCommand(gdb.Command):
     _syntax_  = _cmdline_
 
     def __init__(self, *args, **kwargs):
+        """
+        Initialize gdb gdb
+
+        Args:
+            self: (todo): write your description
+        """
         super(GefRestoreCommand, self).__init__(GefRestoreCommand._cmdline_,
                                                 gdb.COMMAND_SUPPORT,
                                                 gdb.COMPLETE_NONE,
@@ -8786,6 +11631,13 @@ class GefRestoreCommand(gdb.Command):
         return
 
     def invoke(self, args, from_tty):
+        """
+        Invoke the command.
+
+        Args:
+            self: (todo): write your description
+            from_tty: (todo): write your description
+        """
         self.dont_repeat()
         if not os.access(GEF_RC, os.R_OK):
             return
@@ -8829,6 +11681,12 @@ class GefMissingCommand(gdb.Command):
     _syntax_  = _cmdline_
 
     def __init__(self, *args, **kwargs):
+        """
+        Initialize the gdb gdb
+
+        Args:
+            self: (todo): write your description
+        """
         super(GefMissingCommand, self).__init__(GefMissingCommand._cmdline_,
                                                 gdb.COMMAND_SUPPORT,
                                                 gdb.COMPLETE_NONE,
@@ -8836,6 +11694,13 @@ class GefMissingCommand(gdb.Command):
         return
 
     def invoke(self, args, from_tty):
+        """
+        Invoke a command.
+
+        Args:
+            self: (todo): write your description
+            from_tty: (todo): write your description
+        """
         self.dont_repeat()
         missing_commands = __gef__.missing_commands.keys()
         if not missing_commands:
@@ -8855,6 +11720,12 @@ class GefSetCommand(gdb.Command):
     _syntax_  = "{:s} [GDB_SET_ARGUMENTS]".format(_cmdline_)
 
     def __init__(self, *args, **kwargs):
+        """
+        Initialize gdb gdb
+
+        Args:
+            self: (todo): write your description
+        """
         super(GefSetCommand, self).__init__(GefSetCommand._cmdline_,
                                             gdb.COMMAND_SUPPORT,
                                             gdb.COMPLETE_SYMBOL,
@@ -8862,6 +11733,13 @@ class GefSetCommand(gdb.Command):
         return
 
     def invoke(self, args, from_tty):
+        """
+        Invoke a command.
+
+        Args:
+            self: (todo): write your description
+            from_tty: (todo): write your description
+        """
         self.dont_repeat()
         args = args.split()
         cmd = ["set", args[0],]
@@ -8883,6 +11761,12 @@ class GefRunCommand(gdb.Command):
     _syntax_  = "{:s} [GDB_RUN_ARGUMENTS]".format(_cmdline_)
 
     def __init__(self, *args, **kwargs):
+        """
+        Initialize the gdb
+
+        Args:
+            self: (todo): write your description
+        """
         super(GefRunCommand, self).__init__(GefRunCommand._cmdline_,
                                             gdb.COMMAND_SUPPORT,
                                             gdb.COMPLETE_FILENAME,
@@ -8890,6 +11774,13 @@ class GefRunCommand(gdb.Command):
         return
 
     def invoke(self, args, from_tty):
+        """
+        Invoke the command.
+
+        Args:
+            self: (todo): write your description
+            from_tty: (todo): write your description
+        """
         self.dont_repeat()
         if is_alive():
             gdb.execute("continue")
@@ -8905,6 +11796,20 @@ class GefAlias(gdb.Command):
     """Simple aliasing wrapper because GDB doesn't do what it should.
     """
     def __init__(self, alias, command, completer_class=gdb.COMPLETE_NONE, command_class=gdb.COMMAND_NONE):
+        """
+        Initialize a command.
+
+        Args:
+            self: (todo): write your description
+            alias: (str): write your description
+            command: (str): write your description
+            completer_class: (str): write your description
+            gdb: (todo): write your description
+            COMPLETE_NONE: (todo): write your description
+            command_class: (str): write your description
+            gdb: (todo): write your description
+            COMMAND_NONE: (str): write your description
+        """
         p = command.split()
         if not p:
             return
@@ -8929,10 +11834,24 @@ class GefAlias(gdb.Command):
         return
 
     def invoke(self, args, from_tty):
+        """
+        Invoke a command.
+
+        Args:
+            self: (todo): write your description
+            from_tty: (todo): write your description
+        """
         gdb.execute("{} {}".format(self._command, args), from_tty=from_tty)
         return
 
     def lookup_command(self, cmd):
+        """
+        Look up the given a command name.
+
+        Args:
+            self: (todo): write your description
+            cmd: (str): write your description
+        """
         global __gef__
         for _name, _class, _instance in __gef__.loaded_commands:
             if cmd == _name:
@@ -8944,10 +11863,23 @@ class GefAlias(gdb.Command):
 class GefAliases(gdb.Command):
     """List all custom aliases."""
     def __init__(self):
+        """
+        Initialize gdb
+
+        Args:
+            self: (todo): write your description
+        """
         super(GefAliases, self).__init__("aliases", gdb.COMMAND_OBSCURE, gdb.COMPLETE_NONE)
         return
 
     def invoke(self, args, from_tty):
+        """
+        Invoke a command.
+
+        Args:
+            self: (todo): write your description
+            from_tty: (todo): write your description
+        """
         self.dont_repeat()
         ok("Aliases defined:")
         for _alias in __aliases__:
@@ -8958,11 +11890,24 @@ class GefAliases(gdb.Command):
 class GefTmuxSetup(gdb.Command):
     """Setup a confortable tmux debugging environment."""
     def __init__(self):
+        """
+        Initialize gdb tables.
+
+        Args:
+            self: (todo): write your description
+        """
         super(GefTmuxSetup, self).__init__("tmux-setup", gdb.COMMAND_NONE, gdb.COMPLETE_NONE)
         GefAlias("screen-setup", "tmux-setup")
         return
 
     def invoke(self, args, from_tty):
+        """
+        Invoke command.
+
+        Args:
+            self: (todo): write your description
+            from_tty: (todo): write your description
+        """
         self.dont_repeat()
 
         tmux = os.getenv("TMUX")
