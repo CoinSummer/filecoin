@@ -1408,7 +1408,7 @@ sudo make install
 
 ### 19.2 开源
 
-- 1. [【3群 群友 `@呆` 开源的 monitor 】](./files/lotus-worker-monitor.zip)
+- 1. [【3群 群友 `@新手村bugx` 开源的 monitor 】](./files/lotus-worker-monitor.zip)
 - 2. [【2群 群友 `@默然` 开源的调度程序 】](https://github.com/moran666666/lotus-1.4.0.git)
 - 3. [【开源社区 `@jackoelv` 开源的 C2 优化程序 -- 仅 2080Ti 】](https://github.com/jackoelv/bellperson/tree/2080Ti)、[【优化思路】](https://github.com/jackoelv/bellperson/blob/3090/todo.md)、[【3090 显卡优化版本】](https://github.com/jackoelv/bellperson/tree/3090)
 
