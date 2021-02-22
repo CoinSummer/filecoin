@@ -403,20 +403,21 @@ lotus-shed sectors terminate --really-do-it [sectorNum1 sectorNum2 ...]
 
 ### 5.13 离线进行Deal数据传输
 
-在Daemon机上进行操作：
+在 `Daemon` 机上进行操作：
+
 ```sh
-1.首先用要传输的数据生成car
+# 1.首先用要传输的数据生成car
 lotus client generate-car /input_path /output_path.car
-2.生成交易CID
+# 2.生成交易CID
 lotus client commP /output_path.car
-3.生成离线交易
+# 3.生成离线交易
 lotus client deal --manual-piece-cid=CID --manual-piece-size=datasize <Data CID> <miner> <price> <duration>
-其中，--manual-piece-cid=CID/<Data CID>为第2步生成的交易CID,datasize计算方法为：x = SIZE_IN_BYTES; 127*( 2^( ceil( log2( ceil ( x /127 ) ) ) ) )
-在 https://www.wolframalpha.com 输入计算公式并将SIZE_IN_BYTES替换为你output_path.car的值（ls -l output_path.car）
-4.将第3步的dealcid和output_path.car发送给接收方（例如邮寄硬盘；网盘等）
-5.Miner导入接收到的数据
+# 其中，--manual-piece-cid=CID/<Data CID>为第2步生成的交易CID,datasize计算方法为：x = SIZE_IN_BYTES; 127*( 2^( ceil( log2( ceil ( x /127 ) ) ) ) )
+# 在 https://www.wolframalpha.com 输入计算公式并将SIZE_IN_BYTES替换为你output_path.car的值（ls -l output_path.car）
+# 4.将第3步的dealcid和output_path.car发送给接收方（例如邮寄硬盘；网盘等）
+# 5.Miner导入接收到的数据
 lotus-miner storage-deals import-data dealcid output_path.car
-···
+```
 
 ## 6. Worker 操作
 
