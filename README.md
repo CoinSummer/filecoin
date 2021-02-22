@@ -1334,9 +1334,10 @@ P2 分为两个阶段，一个是 `Building column hash`（也叫做 `Building t
 ### 17.1 币单位转换
 
 $$
-1 FIL = 10^{9} nanoFIL = 10^{18} attoFIL
-$$
 
+1 FIL = 10^{9} nanoFIL = 10^{18} attoFIL
+
+$$
 
 
 参考：[【go-humanize】](https://github.com/dustin/go-humanize/blob/master/si.go#L10)
