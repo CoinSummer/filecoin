@@ -100,6 +100,7 @@
 - [本地测试网](https://docs.lotu.sh/en+setup-local-dev-net)
 
 - [IPFS.GUIDE 的地址导航栏（带图标，挺好看的）](http://www.ipfs.guide/)
+- [群友 @全栈老吕 的导航栏（带图标，很不错）](https://www.vlongen.com/)
   
 - [官方挖矿参考文档： mining-hardware-config-v6.pdf](./files/mining-hardware-config-v6.pdf)
 
