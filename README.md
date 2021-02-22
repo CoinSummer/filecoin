@@ -38,6 +38,7 @@
   - [【群友 @ican fly 开源项目】: 矿工监控告警系统](https://github.com/twosson/fil_exporter)
   - [【群友 @Rock-Yang 提供】：Filecoin 挖矿入门系列教程](http://www.r9it.com/20191217/lotus-cluster-mining.html)
   - [【群友 @新手村bugx 提供】：filecoin安装和维护.pdf](./files/filecoin安装和维护.pdf)
+  - [【群友 @全栈老吕 提供】：官方文档译文](https://filecoin.filgo.info/mine/)
 - Lotus官方文档
   - [旧版文档](https://docs.lotu.sh/)
   - [新版文档](https://docs.filecoin.io/)
