@@ -1436,6 +1436,14 @@ sudo make install
 - 1. [【3群 群友 `@新手村bugx` 开源的 monitor 】](./files/lotus-worker-monitor.zip)
 - 2. [【2群 群友 `@默然` 开源的调度程序 】](https://github.com/moran666666/lotus-1.4.0.git)
 - 3. [【开源社区 `@jackoelv` 开源的 C2 优化程序 -- 仅 2080Ti 】](https://github.com/jackoelv/bellperson/tree/2080Ti)、[【优化思路】](https://github.com/jackoelv/bellperson/blob/3090/todo.md)、[【3090 显卡优化版本】](https://github.com/jackoelv/bellperson/tree/3090)
+- 4. [【2群 群友 @mje 开源的 PC2 优化代码】：2080ti实测数据由25min优化到19min，显存占用也更小了](https://github.com/filguard/rust-fil-proofs)
+  - 编译方法：
+    git clone https://github.com/filguard/rust-fil-proofs.git
+    然后在lotus/extern/filecoin-ffi/rust/Cargo.toml文件中添加替换包路径
+    [replace]
+    "storage-proofs-porep:5.4.0" = { path = "../../../../rust-fil-proofs/storage-proofs/porep" }
+    "filecoin-proofs:5.4.0" = { path = "../../../../rust-fil-proofs/filecoin-proofs" }
+    "storage-proofs:5.4.0" = { path = "../../../../rust-fil-proofs/storage-proofs" }
 
 
 ## 20. 打赏
