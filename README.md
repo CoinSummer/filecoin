@@ -1317,12 +1317,14 @@ Swap:         2.0Gi       1.2Gi       795Mi
 
 Filecoin 中文交流-1群（目前已满）,
 Filecoin 中文交流-2群（目前已满）,
-Filecoin 中文交流-3群（目前还有空位）,
+Filecoin 中文交流-3群（目前已满）,
+Filecoin 中文交流-4群（目前还有空位）,
 
 
 ![Filecoin 中文交流-1群（目前已满）](./pictures/wechat_group_01.png)
 ![Filecoin 中文交流-2群（目前已满）](./pictures/wechat_group_02.png)
-![Filecoin 中文交流-3群（目前还有空位）](./pictures/wechat_group_03.png)
+![Filecoin 中文交流-3群（目前已满）](./pictures/wechat_group_03.png)
+![Filecoin 中文交流-4群（目前还有空位）](./pictures/wechat_group_04.png)
 
 
 
