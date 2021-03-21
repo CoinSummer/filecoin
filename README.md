@@ -1,6 +1,7 @@
 # Filecoin 资源分享目录
 
 **声明⚠️⚠️**
+
 [CoinSummer实验室](https://coinsummer.io)已与[Filecoin](https://filecoin.io/)合作，[共同维护建设中文社区]((https://mp.weixin.qq.com/s/rIcdRuHMm03JIhFHa-sPeQ该Repository))，该Repository的内容将不再更新维护，所有内容已转移至[https://github.com/filecoin-project/community-china](https://github.com/filecoin-project/community-china)，请大家移步[Community-china]([https://github.com/filecoin-project/community-china])，并在[Filecoin中文技术论坛](https://github.com/filecoin-project/community-china/discussions)进行更多交流。
 
 ## 1. 常用链接
