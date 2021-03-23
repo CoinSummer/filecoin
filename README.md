@@ -338,15 +338,16 @@ lotus-miner storage list
 移动后，重启 daemon 和 miner，miner 会重新读取新路径下的所有 sector 信息。
 
 ### 5.6 使用远程 daemon（daemon 在其他机器）
-假设daemon在 `192.168.1.100` 机器上，miner在 `192.168.1.101` 机器上：
-1. 修改远程 daemon (192.168.1.100)上 `~/.lotus/config.toml` 中的 `ListenAddress` 为：
+假设 `daemon` 在 `192.168.1.100` 机器上，`miner` 在 `192.168.1.101` 机器上：
+1. 修改远程 `daemon` (`192.168.1.100`) 上 `~/.lotus/config.toml` 中的 `ListenAddress` 为：
 ```toml
 # Default config:
 [API]
 ListenAddress = "/ip4/192.168.1.100/tcp/1234/http"
 ```
-2. 将远程 daemon (192.168.1.100) 上 `~/.lotus` 目录下的 `api` 和 `token` 拷贝到 miner 机器(192.168.1.101)的 `~/.lotus` 目录下；
-3. 重启 miner 即可。
+2. 修改好配置文件之后，**需要重启 `daemon` 进程**，才能使得 `API` 生效。
+3. 将远程 `daemon` (`192.168.1.100`) 上 `~/.lotus` 目录下的 `api` 和 `token` 拷贝到 `miner` 机器 (`192.168.1.101`) 的 `~/.lotus` 目录下，`miner` 机器上没有这个目录就新建一个，让它和 `daemon` 机器上保持一致；
+4. 此时，在 `miner` 机器上已经可以正常使用远程的 `daemon`，初始化 `miner`和运行 `miner` 等操作都已经可以正常执行。
 
 ### 5.7 启动 miner 参考命令
 
@@ -1355,9 +1356,7 @@ P2 分为两个阶段，一个是 `Building column hash`（也叫做 `Building t
 ### 17.1 币单位转换
 
 $$
-
 1 FIL = 10^{9} nanoFIL = 10^{18} attoFIL
-
 $$
 
 
